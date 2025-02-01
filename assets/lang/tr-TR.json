@@ -1,0 +1,40 @@
+{
+  "culture": {
+    "id": "712d35aa-274d-43ce-b6d6-b6a2e5263c94",
+    "name": "tr-TR",
+    "description": "Türkçe",
+    "flag": "iVBORw0KGgoAAAANSUhEUgAAABoAAAASCAIAAADKe1n0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDcuMi1jMDAwIDc5LjU2NmViYzViNCwgMjAyMi8wNS8wOS0wODoyNTo1NSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIzLjQgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NjEwQzkyQjAyNURFMTFFRDhFQUE5RjJGMkRGMjRCQzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NjEwQzkyQjEyNURFMTFFRDhFQUE5RjJGMkRGMjRCQzgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2MTBDOTJBRTI1REUxMUVEOEVBQTlGMkYyREYyNEJDOCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2MTBDOTJBRjI1REUxMUVEOEVBQTlGMkYyREYyNEJDOCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PiRI9sIAAAKtSURBVHjarFRbS1RRFN5rX85FnZnGJu0CEU02ZkUQEQUhPRVGhkH/w4foJYiCon8Q9OBLYdAviJ4DoSBQsDQhlJxIvM0oZ3Rmztlnr9YelZlytHloPRz2Ze211vetbx3It3Wz/2ecAew6BAbcfu0CmjnsadJwwWO9E6f2UmsMK4hR7UiAdMFxWg6HyBv2GIZMR5BqF5lOkApLJbMSMB0zwVspUzKsQ6SiCKZz6aI3NOic66NY+ut0+cNYNPGFctTL34e7ukOkGVa9gRudoyOph/ch2VGdmIgXl9TZMzKXRSmIBGYMQ9yvOkEoTExp47DgX7954PljlT25/ujp+rMnBB2YD47PO9OgFOMCyxsWuOuDpFfYDGxsY5nNTWCef/eO6s2V370PXrwkYLyti6Gxt4WiCYv+4D2GWucXcKVgFpcYJdiFndv66RTL4nCXOp0l9OH4pC4ugEpSdfaKHBhzrvSnHgwffD3SNnTblALUIeO8me62zRBuVhOEbYhtkGCNuSsh8zyeTvOuQxQIWbxHZ2sFA/hmaVnnf9Fa9fRw6WFUAOcIA2MzRVE0PVV69QZG30bjk9z1UHrbsP40cd9P0QVwhdUCoHL7rzkXzpvVternTxgFLKoASshkUMf6+2w09lHP/7Qc8OYyFMNuEiiPJYLrH7MmKHtXL/u3BuTxEyLTrbI9sjeH1ZA0iMU1FiORS1oBIZqCFcMywS1TSMOEG6VocirO5yGRUL19IpMBR8Yrq/rbDAYbICU4yn73FjPMdRyVZodX4BTRsJJIdqvcKUi0m8VlPTOHxIbrtjJkMJ88Blo3tJrTeGA1MKyyrXMnZTtek8u/Zxb+8qOt4NCR3pEJ2pPWYtWEsuXKOXXXrrZGp/5fACEVEBtbboRXCOoHNk4Y0Guww4/4W4ABAMxMLUglL/CWAAAAAElFTkSuQmCC"
+  },
+  "resources": [
+    {
+      "cultureId": "712d35aa-274d-43ce-b6d6-b6a2e5263c94",
+      "key": "splash.appbar.title",
+      "value":"Splash Ekranı"
+    },
+    {
+      "cultureId": "712d35aa-274d-43ce-b6d6-b6a2e5263c94",
+      "key": "localization.appbar.title",
+      "value":"Dil Değiştirme Ekranı"
+    },
+    {
+      "cultureId": "712d35aa-274d-43ce-b6d6-b6a2e5263c94",
+      "key": "login.appbar.title",
+      "value":"Giriş Ekranı"
+    },
+    {
+      "cultureId": "712d35aa-274d-43ce-b6d6-b6a2e5263c94",
+      "key": "bottomNavigationBar.pageHome",
+      "value":"Ana Sayfa"
+    },
+    {
+      "cultureId": "712d35aa-274d-43ce-b6d6-b6a2e5263c94",
+      "key": "bottomNavigationBar.pageSettings",
+      "value":"Ayarlar"
+    },
+    {
+      "cultureId": "712d35aa-274d-43ce-b6d6-b6a2e5263c94",
+      "key": "bottomNavigationBar.pageProfile",
+      "value":"Profil"
+    }
+  ]
+}

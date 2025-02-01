@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "872023771713",
+    "project_id": "skincareappforbetul",
+    "storage_bucket": "skincareappforbetul.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872023771713:android:f5bae19443535b487314c0",
+        "android_client_info": {
+          "package_name": "com.lucielle.skin_care"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Q9rYsOP7uwQ_OQAaA1PcBHJ56ZYBDhw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

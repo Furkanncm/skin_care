@@ -1,0 +1,40 @@
+{
+  "culture": {
+    "id": "919c39f2-e320-4d62-9c06-ee6571513a8a",
+    "name": "en-EN",
+    "description": "English",
+    "flag": "iVBORw0KGgoAAAANSUhEUgAAABoAAAASCAYAAABFGc6jAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDcuMi1jMDAwIDc5LjU2NmViYzViNCwgMjAyMi8wNS8wOS0wODoyNTo1NSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIzLjQgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NjEwQzkyQUMyNURFMTFFRDhFQUE5RjJGMkRGMjRCQzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NjEwQzkyQUQyNURFMTFFRDhFQUE5RjJGMkRGMjRCQzgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2MTBDOTJBQTI1REUxMUVEOEVBQTlGMkYyREYyNEJDOCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2MTBDOTJBQjI1REUxMUVEOEVBQTlGMkYyREYyNEJDOCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PmG1jQMAAAVQSURBVHjarFV5TJRHFP99x+6yB4uy3HIplWqrsShWraip0VLQWLFGVyWKihBRo6A0hmjTWLU1WjFEQz1A2npQo9UYvCg1bVArqagFrFURZRFhF1dh791vv53OfoJHkyb+0Ze8Od68mXe/Ya5nf3EtZv3iDk9CrK/izMPYyuoHWpNV8IVp5eBlLAS3yKoCeGFrwZj7Y/ft0XUcOB4BCpHZszuv5qwwF+2sS3C4vDKZjPWBoQcEsNgEOBVKZszISLFwiK9jyLFDDl5XVjG87WDlKM32IuSt0CNxaBhKym+i9qpRugQ5C0WQHF6Of5u0tsPTdt0vB6R1XByl4U+DDe5uD6DiAcEHWL3onxQD/QgN8nquIkRfktjZ2imw9SV7XFHTx8FXsAqGcRmY2nAJVZvH4tuNo5EwKJCqJ8ArEulxsCwd+OcorQGOpWb40S4AygBkLRmGqndNKD6xCao1OXANiseg2konu7w1Ams+XoeOHfsQbLPBlLEQXRMysVBpxIUdE7GhIAnRYSp4+oT1AkPf9pMcHjooFJiWNhinM5QoPrkdQ9fmwdRkQMSxowg++x0O93sHvPHyfVTeVOJEYixyV+5A+u1fEVNxBM1j9Aiel47CgizMXJkIbSgLm1N8Icjn8wsjGD1QjXnhTnza9D20m8/C4pVBXrAasiXzcNauwqZNN9F4pR384JE6iFQ1t2BH1T05Ho+YjtxzMxBXVg5z9S943NQO1drFiB4ahS7fS6usLhHDQzmcmOiForQSnpY7sKR+hP5bVsMdE43yCwaUn/8bVpsHsYla8Bd3T36pJUU7HWiyIXLS1+hyE3i6nkLOMfDbwgaq6eiVeEWVEuF0Fj5MhkhRqdGC633HRTF9ajzmpMdLNH8yMqbM/B46a1/6nqHB99GYUIEqBRieA/GKECnBdake3tZmiY+PewuKlFEgHAuGIqF34HaD0Imnisl55tWQWphb0Lwm6L+AUHs56Kh22t69hVpppnsWbwCWN+L6P4APzVz2GsHjJVLdMH4VaNr2uYWh6P6X6zQpc8HJuRfuFRxuGk+/6+gd8no58O4fdkoNwJ8INhrnIFqLob2H/gQgNiuoyyFTB8KYswGe/b9LZwGpi9Bv75d48tgs1Zg8TIdQBYMOf4LQi2oq8FV38eNzauClrUOtlmH+lFjkTY+Hr8uE7o27QWovIiAmAc6cBWDnpIFzOHs7A1XMapcyynn5BuzbyiBvb4Y7JQWPli/FvhYZ/mh8Ao/DBQVl56imrOGeBapgDT7PfQ+5yVr4du2HedgMqE+eApLfx0/pmdBfU6GhS0RgAPdCQzltO4+o5vbhw5Cwvwgh0yZDOF6FsLQFWHrlGOYMUcCs0KDlgRv3rpuBssaenh5BIPZT50hb4iTyRBlNLOmLyIWKGpJRcotgVjXB7HPkjFEktmWFhGaphNbsQnK6w0sG5F4k+YfukDvP3MTR0ERapmSRu4gihvjx5Mr2IyRrbxMJW1ffwy7o/gvPPslGx8z5CE0Mx4Odu/HZ/A1I/ZnBydN3qW+cUMkgxelf8ZUKufOpE8WlDZi67jfs7dQgqLoM4eePoFsXAl3hMnx1fAtK4zrBt0zQK4NCguD+ZheKoj7A4RtWGOsaAQ11UyCV4PBC7Gs9/gbX2xmer2nEqAtFymd4aEP+1nocrWnDqkVJSKv9Ec8OnoJx/TYk16wI4CPys2puz9Kripv5yLo6E6ey2UnSqGD0fWKC4JM+Pl703mfiBujkMSOlj4+uOynNPCJW8/zjk3M+kZZAW5cTW0qvsQ9TB1qW5s019J+Wwho2H4j8R4ABABd1RvxacWQPAAAAAElFTkSuQmCC"
+  },
+  "resources": [
+    {                
+      "cultureId": "919c39f2-e320-4d62-9c06-ee6571513a8a",
+      "key": "splash.appbar.title",
+      "value":"Splash Screen"
+    },
+    {
+      "cultureId": "919c39f2-e320-4d62-9c06-ee6571513a8a",
+      "key": "localization.appbar.title",
+      "value":"Localization Screen"
+    },
+    {
+      "cultureId": "919c39f2-e320-4d62-9c06-ee6571513a8a",
+      "key": "login.appbar.title",
+      "value":"Login Screen"
+    },
+    {
+      "cultureId": "919c39f2-e320-4d62-9c06-ee6571513a8a",
+      "key": "bottomNavigationBar.pageHome",
+      "value":"Home Page"
+    },
+    {
+      "cultureId": "919c39f2-e320-4d62-9c06-ee6571513a8a",
+      "key": "bottomNavigationBar.pageSettings",
+      "value":"Settings"
+    },
+    {
+      "cultureId": "919c39f2-e320-4d62-9c06-ee6571513a8a",
+      "key": "bottomNavigationBar.pageProfile",
+      "value":"Profile"
+    }
+  ]
+}

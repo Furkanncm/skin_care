@@ -1,0 +1,84 @@
+name: bloc_clean_architecture
+description: "Bloc Clean Architecture"
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.2 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  flutter_core:
+    git:
+      url: https://github.com/ozverimobile/Flutter-Core
+      ref: development
+
+  # Dependency injection
+  get_it: ^8.0.3
+  injectable: ^2.4.1
+
+  # Firebase
+  firebase_analytics: ^11.0.1
+  firebase_crashlytics: ^4.0.1
+  firebase_performance: ^0.10.0+1
+  firebase_core: ^3.1.0
+
+  # State management
+  bloc: ^9.0.0
+  bloc_concurrency: ^0.3.0
+  flutter_bloc: ^9.0.0
+  rxdart: ^0.28.0
+  stream_transform: ^2.1.0
+  hydrated_bloc: ^10.0.0
+
+  # Model configuration
+  equatable: ^2.0.5
+  json_annotation: ^4.8.1
+
+  # UI
+  cupertino_icons: ^1.0.6
+  skeletonizer: ^1.1.1
+  google_fonts: ^6.2.1
+
+  # Router
+  go_router: ^14.1.4
+
+  # Config
+  envied: ^1.1.0
+  flutter_gen: ^5.4.0
+  path_provider: ^2.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: ^2.4.9
+  envied_generator: ^1.1.0
+  injectable_generator: ^2.6.1
+  json_serializable: ^6.7.1
+  very_good_analysis: ^7.0.0
+  flutter_gen_runner: ^5.4.0
+  
+dependency_overrides:
+  intl: ^0.19.0
+
+flutter_gen:
+  output: lib/src/common/gen/
+  line_length: 800
+
+flutter:
+  uses-material-design: true
+  # assets:
+  #   - assets/lang/
+  #   - assets/network_mocks/
+  #   - assets/images/
+
+scripts:
+  brunner: dart run build_runner build --delete-conflicting-outputs
+  bwatch: dart run build_runner watch --delete-conflicting-outputs
