@@ -1,11 +1,12 @@
 import 'dart:async';
 
+import 'package:bloc_clean_architecture/firebase_options.dart';
 import 'package:bloc_clean_architecture/src/common/app_entry/app_entry.dart';
 import 'package:bloc_clean_architecture/src/common/configuration/configuration.dart';
 import 'package:bloc_clean_architecture/src/common/observers/bloc_observer.dart';
-// import 'package:firebase_analytics/firebase_analytics.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core/flutter_core.dart';
@@ -29,28 +30,28 @@ void main() {
         Bloc.observer = OHBlocObserver();
         await Future.wait([
           Core.initialize(),
-          // _initializeFirebase(),
+           _initializeFirebase(),
         ]);
 
-        /// **runApp çağrısını burada yap!**
+      
         runApp(const BlocApp());
       } catch (error, stack) {
         if (kReleaseMode) {
-          // FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+           FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
         }
       }
     },
     (error, stack) {
       if (kReleaseMode) {
-        //  FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
       }
     },
   );
 }
 
-// Future<void> _initializeFirebase() async {
-//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+Future<void> _initializeFirebase() async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-//   /// [instance] getter Firebase Analytics objesini oluşturur.
-//   FirebaseAnalytics.instance;
-// }
+  /// [instance] getter Firebase Analytics objesini oluşturur.
+  FirebaseAnalytics.instance;
+}

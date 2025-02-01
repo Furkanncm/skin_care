@@ -1,7 +1,6 @@
 import 'package:bloc_clean_architecture/src/common/configuration/configuration.dart';
 import 'package:bloc_clean_architecture/src/common/constants/app_contants.dart';
 import 'package:bloc_clean_architecture/src/common/interceptors/dio_network_log_interceptor.dart';
-import 'package:bloc_clean_architecture/src/common/interceptors/dio_network_performance_interceptor.dart';
 import 'package:bloc_clean_architecture/src/common/network_manager/base_response.dart';
 import 'package:bloc_clean_architecture/src/common/network_manager/message.dart';
 import 'package:bloc_clean_architecture/src/common/network_manager/refresh_token_interceptor.dart';
@@ -24,7 +23,7 @@ final class NetworkManager extends CoreNetworkManager {
           ),
           interceptors: [
             DioNetworkErrorLogInterceptor(),
-           // DioFirebasePerformanceInterceptor(),
+            // DioFirebasePerformanceInterceptor(),
             RefreshTokenInterceptor(),
           ],
         );
@@ -74,7 +73,7 @@ final class NetworkManager extends CoreNetworkManager {
   }
 
   @override
-Future<CoreBaseResponse> primitiveRequest<T>({
+  Future<CoreBaseResponse> primitiveRequest<T>({
     required BaseRequestPath path,
     required RequestType type,
     BaseModel<dynamic>? data,
