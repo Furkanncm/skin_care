@@ -28,13 +28,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     isDayInWeek = isDayInWeekFunc(event.currentDay);
   }
 
-  bool isDayInWeekFunc(DateTime currentDay) {
-    final now = DateTime.now();
-    final beginningOfWeek = now.subtract(Duration(days: now.weekday - 1)); // Haftanın başlangıcı (Pazartesi)
-    final endOfWeek = beginningOfWeek.add(Duration(days: 6)); // Haftanın sonu (Pazar)
-    return currentDay.isAfter(beginningOfWeek.subtract(const Duration(seconds: 1))) && currentDay.isBefore(endOfWeek.add(const Duration(seconds: 1)));
-  }
-
   Future<void> _homeBackToTodayEvent(HomeBackToTodayEvent event, Emitter<HomeState> emit) async {
     final focusedDay = DateTime.now();
     emit(state.copyWith(focusedDay: focusedDay));
@@ -44,5 +37,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _homePageChangedOnCalendar(HomePageChangedOnCalendar event, Emitter<HomeState> emit) async {
     isDayInWeek = isDayInWeekFunc(event.focusedDay);
     emit(state.copyWith(focusedDay: event.focusedDay, currentDay: DateTime.now()));
+  }
+
+  bool isDayInWeekFunc(DateTime currentDay) {
+    final now = DateTime.now();
+    final beginningOfWeek = now.subtract(Duration(days: now.weekday - 1));
+    final endOfWeek = beginningOfWeek.add(Duration(days: 6));
+
+    return currentDay.isAfter(beginningOfWeek.subtract(const Duration(days: 1))) && currentDay.isBefore(endOfWeek.add(const Duration(seconds: 1)));
   }
 }

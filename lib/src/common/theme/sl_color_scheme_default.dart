@@ -3,31 +3,31 @@ import 'package:flutter/material.dart';
 
 abstract class SCColorSchemeDefault {
   static List<MyColorSchemeDto> get themes => [
-        // Light Theme
+        // Light Theme (Mavi ağırlıklı)
         const MyColorSchemeDto(
           brightness: Brightness.light,
-          primary: Color(0xffFCE7C8),
-          onPrimary: Colors.black,
-          secondary: Color(0xffB1C29E),
+          primary: Color(0xff3A86FF), // Canlı mavi
+          onPrimary: Colors.white,
+          secondary: Color(0xffA6C1EE), // Açık mavi
           onSecondary: Colors.black,
-          error: Color(0xffFADA7A),
-          onError: Colors.black,
-          surface: Color(0xffF0A04B),
+          error: Color(0xffFF6B6B),
+          onError: Colors.white,
+          surface: Color(0xffE0F2FE), // Açık mavi tonu
           onSurface: Colors.black,
-          scaffoldBackgroundColor: Color(0xffFCE7C8),
+          scaffoldBackgroundColor: Color(0xffF0F9FF), // Hafif mavi-beyaz
         ),
-        // Dark Theme
+        // Dark Theme (Mavi ağırlıklı)
         const MyColorSchemeDto(
           brightness: Brightness.dark,
-          primary: Color(0xffB1C29E),
+          primary: Color(0xff1E3A8A), // Koyu mavi
           onPrimary: Colors.white,
-          secondary: Color(0xffFCE7C8),
+          secondary: Color(0xff3A86FF), // Canlı mavi
           onSecondary: Colors.white,
-          error: Color(0xffF0A04B),
+          error: Color(0xffFF6B6B),
           onError: Colors.white,
-          surface: Color(0xffFADA7A),
+          surface: Color(0xff1E293B), // Koyu gri-mavi
           onSurface: Colors.white,
-          scaffoldBackgroundColor: Color(0xff121212),
+          scaffoldBackgroundColor: Color(0xff0F172A), // Derin koyu mavi
         ),
       ];
 }

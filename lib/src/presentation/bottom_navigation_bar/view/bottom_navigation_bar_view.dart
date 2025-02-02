@@ -24,7 +24,7 @@ class BottomNavigationBarView extends StatelessWidget {
           SalomonBottomBarItem(
             icon: Icon(Icons.home),
             title: Text("Home"),
-            selectedColor: Colors.purple,
+            selectedColor: Colors.blue,
           ),
 
           /// Likes

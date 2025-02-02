@@ -25,6 +25,73 @@ final class HomeView extends StatelessWidget {
               return Column(
                 children: [
                   _HeaderAndCalendar(),
+                  Expanded(
+                    child: GridView.builder(
+                      itemCount: 10,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 0.8,
+                      ),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: AppConstants.paddingConstants.pageLowPadding,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: context.colorScheme.secondary,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: GestureDetector(
+                                      child: AnimatedContainer(
+                                        duration: const Duration(milliseconds: 200),
+                                        width: 24,
+                                        height: 24,
+                                        decoration: BoxDecoration(
+                                          color: true ? Colors.blue : Colors.white,
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border.all(
+                                            color: false ? Colors.blue : Colors.grey,
+                                            width: 2,
+                                          ),
+                                        ),
+                                        child: true
+                                            ? const Icon(
+                                                Icons.check,
+                                                size: 18,
+                                                color: Colors.white,
+                                              )
+                                            : null,
+                                      ),
+                                    ),
+                                  ),
+                                  verticalBox8,
+                                  Expanded(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.network(
+                                        "https://picsum.photos/200/300",
+                                        width: double.infinity, // Genişliği tamamen kaplasın
+                                        fit: BoxFit.fill, // Oranları bozmadan içini doldur
+                                      ),
+                                    ),
+                                  ),
+                                  Align(alignment: Alignment.centerLeft, child: CoreText.bodyLarge("Serum")),
+                                  Align(alignment: Alignment.centerLeft, child: CoreText.bodyMedium("Korendy"))
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               );
             }
@@ -60,6 +127,11 @@ final class _HeaderAndCalendar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CoreText.headlineMedium(LocalizationKey.dailyRoutine.value),
+          verticalBox4,
+          Divider(
+            indent: context.width * 0.05,
+            endIndent: context.width * 0.05,
+          ),
           verticalBox16,
           _MonthAndBackToTodayWidgets(),
           verticalBox4,
@@ -70,7 +142,8 @@ final class _HeaderAndCalendar extends StatelessWidget {
   }
 }
 
-class _MonthAndBackToTodayWidgets extends StatelessWidget {
+@immutable
+final class _MonthAndBackToTodayWidgets extends StatelessWidget {
   const _MonthAndBackToTodayWidgets();
 
   @override
@@ -85,14 +158,9 @@ class _MonthAndBackToTodayWidgets extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.topRight,
-          child: CoreTextButton(
-            child: context.watch<HomeBloc>().isDayInWeek
-                ? emptyBox
-                : CoreText.bodyLarge(
-                    LocalizationKey.goNow.value,
-                    textColor: Colors.blue,
-                  ),
-            onPressed: () => bloc.add(HomeBackToTodayEvent()),
+          child: GestureDetector(
+            onTap: () => bloc.isDayInWeek ? emptyBox : bloc.add(HomeBackToTodayEvent()),
+            child: bloc.isDayInWeek ? emptyBox : CoreText.bodyLarge(LocalizationKey.goNow.value, textColor: Colors.blue),
           ),
         ),
       ],
@@ -150,6 +218,51 @@ final class _TodayCardBuilder extends StatelessWidget {
 }
 
 @immutable
+final class _TodayColumnWidget extends StatelessWidget {
+  _TodayColumnWidget({required this.day});
+
+  final DateTime day;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _TodayWidgetsIndent(),
+        verticalBox8,
+        CoreText.bodyLarge(day.toDayName().truncateToLength(length: 3, suffix: "")),
+        verticalBox8,
+        CircleAvatar(radius: 15, backgroundColor: Colors.blue, child: CoreText.bodyLarge(day.day.toString())),
+      ],
+    );
+  }
+}
+
+@immutable
+final class _TodayWidgetsIndent extends StatelessWidget {
+  const _TodayWidgetsIndent();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: context.width * 0.05,
+      height: context.height * 0.004,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 8,
+            offset: Offset(4, 4),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+@immutable
 final class _NotTodayCardBuilder extends StatelessWidget {
   _NotTodayCardBuilder({required this.day});
 
@@ -186,51 +299,6 @@ final class _NotTodayColumnWidget extends StatelessWidget {
         verticalBox8,
         CircleAvatar(radius: 15, backgroundColor: Colors.white, child: CoreText.bodyLarge(day.day.toString())),
       ],
-    );
-  }
-}
-
-@immutable
-final class _TodayColumnWidget extends StatelessWidget {
-  _TodayColumnWidget({required this.day});
-
-  final DateTime day;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _TodayWidgetsIndent(),
-        verticalBox8,
-        CoreText.bodyLarge(day.toDayName().truncateToLength(length: 3, suffix: "")),
-        verticalBox8,
-        CircleAvatar(radius: 15, backgroundColor: Colors.blue, child: CoreText.bodyLarge(day.day.toString())),
-      ],
-    );
-  }
-}
-
-@immutable
-final class _TodayWidgetsIndent extends StatelessWidget {
-  const _TodayWidgetsIndent();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: context.width * 0.05,
-      height: context.height * 0.004,
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blue.withOpacity(0.3), // Gölge rengi ve opaklığı
-            spreadRadius: 2, // Gölgenin yayılma oranı
-            blurRadius: 8, // Gölgenin bulanıklık derecesi
-            offset: Offset(4, 4), // Gölgenin x ve y ekseninde kayması
-          ),
-        ],
-      ),
     );
   }
 }
