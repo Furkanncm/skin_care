@@ -27,7 +27,7 @@ final class ThemeRepository implements IThemeRepository {
   }
 
   @override
-  List<MyColorSchemeDto> getColorSchemesFromLocal() => _themeLocalDS.getColorSchemes() ?? SLColorSchemeDefault.themes;
+  List<MyColorSchemeDto> getColorSchemesFromLocal() => _themeLocalDS.getColorSchemes() ?? SCColorSchemeDefault.themes;
 
   @override
   Future<List<MyColorSchemeDto>> getColorSchemes() async {

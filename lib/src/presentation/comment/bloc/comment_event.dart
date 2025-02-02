@@ -1,12 +1,12 @@
-part of 'comment_bloc.dart';
+// part of 'comment_bloc.dart';
 
-sealed class CommentEvent extends Equatable {
-  @override
-  List<Object> get props => [];
-}
+// sealed class CommentEvent extends Equatable {
+//   @override
+//   List<Object> get props => [];
+// }
 
-final class CommentFetchedEvent extends CommentEvent {
-  CommentFetchedEvent(this.post);
+// final class CommentFetchedEvent extends CommentEvent {
+//   CommentFetchedEvent(this.post);
 
-  final Post post;
-}
+//   final Post post;
+// }

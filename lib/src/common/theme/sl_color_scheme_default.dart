@@ -1,29 +1,31 @@
 import 'package:bloc_clean_architecture/src/data/model/color_scheme/dto/color_scheme_dto.dart';
 import 'package:flutter/material.dart';
 
-abstract class SLColorSchemeDefault {
+abstract class SCColorSchemeDefault {
   static List<MyColorSchemeDto> get themes => [
+        // Light Theme
         const MyColorSchemeDto(
           brightness: Brightness.light,
-          primary: Color(0xffC13A82),
-          onPrimary: Colors.white,
-          secondary: Colors.black,
-          onSecondary: Colors.white,
-          error: Color(0xffFF1800),
-          onError: Colors.white,
-          surface: Colors.white,
+          primary: Color(0xffFCE7C8),
+          onPrimary: Colors.black,
+          secondary: Color(0xffB1C29E),
+          onSecondary: Colors.black,
+          error: Color(0xffFADA7A),
+          onError: Colors.black,
+          surface: Color(0xffF0A04B),
           onSurface: Colors.black,
-          scaffoldBackgroundColor: Color(0xffF5F6F8),
+          scaffoldBackgroundColor: Color(0xffFCE7C8),
         ),
+        // Dark Theme
         const MyColorSchemeDto(
           brightness: Brightness.dark,
-          primary: Color(0xff8E2C63),
+          primary: Color(0xffB1C29E),
           onPrimary: Colors.white,
-          secondary: Colors.black,
+          secondary: Color(0xffFCE7C8),
           onSecondary: Colors.white,
-          error: Color(0xffE53935),
+          error: Color(0xffF0A04B),
           onError: Colors.white,
-          surface: Color(0xff404040),
+          surface: Color(0xffFADA7A),
           onSurface: Colors.white,
           scaffoldBackgroundColor: Color(0xff121212),
         ),

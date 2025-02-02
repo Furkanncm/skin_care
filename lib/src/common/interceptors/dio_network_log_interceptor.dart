@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_core/flutter_core.dart';
 
 final class DioNetworkErrorLogInterceptor extends InterceptorsWrapper {
@@ -27,6 +28,6 @@ final class DioNetworkErrorLogInterceptor extends InterceptorsWrapper {
      }
     ''';
 
-    //  await FirebaseCrashlytics.instance.recordError(errLogString, StackTrace.current);
+    await FirebaseCrashlytics.instance.recordError(errLogString, StackTrace.current);
   }
 }

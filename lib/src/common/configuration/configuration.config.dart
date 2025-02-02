@@ -34,28 +34,20 @@ import 'package:bloc_clean_architecture/src/data/data_source/local/user_local_ds
     as _i493;
 import 'package:bloc_clean_architecture/src/data/data_source/remote/auth_remote_ds.dart'
     as _i321;
-import 'package:bloc_clean_architecture/src/data/data_source/remote/comment_remote_ds.dart'
-    as _i370;
 import 'package:bloc_clean_architecture/src/data/data_source/remote/localization/localization_remote_ds.dart'
     as _i230;
-import 'package:bloc_clean_architecture/src/data/data_source/remote/post_remote_ds.dart'
-    as _i751;
 import 'package:bloc_clean_architecture/src/data/data_source/remote/user_remote_ds.dart'
     as _i706;
 import 'package:bloc_clean_architecture/src/domain/app_version_state/app_version_state_repository.dart'
     as _i1006;
 import 'package:bloc_clean_architecture/src/domain/auth/auth_repository.dart'
     as _i291;
-import 'package:bloc_clean_architecture/src/domain/comment/comment_repository.dart'
-    as _i134;
 import 'package:bloc_clean_architecture/src/domain/indicator/indicator_repository.dart'
     as _i752;
 import 'package:bloc_clean_architecture/src/domain/localization/localization_repository.dart'
     as _i749;
 import 'package:bloc_clean_architecture/src/domain/network_manager/network_manager_repository.dart'
     as _i978;
-import 'package:bloc_clean_architecture/src/domain/post/post_repository.dart'
-    as _i38;
 import 'package:bloc_clean_architecture/src/domain/service_unavailable/service_unavailable_repository.dart'
     as _i1040;
 import 'package:bloc_clean_architecture/src/domain/splash/splash_repository.dart'
@@ -68,14 +60,10 @@ import 'package:bloc_clean_architecture/src/domain/todo/todo_repository.dart'
     as _i356;
 import 'package:bloc_clean_architecture/src/domain/user/user_repository.dart'
     as _i85;
-import 'package:bloc_clean_architecture/src/presentation/comment/bloc/comment_bloc.dart'
-    as _i965;
 import 'package:bloc_clean_architecture/src/presentation/home/bloc/home_bloc.dart'
     as _i827;
 import 'package:bloc_clean_architecture/src/presentation/login/bloc/login_bloc.dart'
     as _i456;
-import 'package:bloc_clean_architecture/src/presentation/post/bloc/post_bloc.dart'
-    as _i436;
 import 'package:bloc_clean_architecture/src/presentation/profile/cubit/profile_cubit.dart'
     as _i486;
 import 'package:bloc_clean_architecture/src/presentation/service_unavailable/bloc/service_unavailable_bloc.dart'
@@ -116,10 +104,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i152.SharedPreferencesManager>(
         () => _i152.SharedPreferencesManager());
     gh.lazySingleton<_i321.AuthRemoteDS>(() => const _i321.AuthRemoteDS());
-    gh.lazySingleton<_i370.CommentRemoteDS>(() => _i370.CommentRemoteDS());
     gh.lazySingleton<_i230.LocalizationRemoteDS>(
         () => const _i230.LocalizationRemoteDS());
-    gh.lazySingleton<_i751.PostRemoteDS>(() => _i751.PostRemoteDS());
     gh.lazySingleton<_i706.UserRemoteDS>(() => const _i706.UserRemoteDS());
     gh.lazySingleton<_i1006.AppVersionStateRepository>(
         () => _i1006.AppVersionStateRepository());
@@ -146,14 +132,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i493.UserLocalDS(gh<_i152.SharedPreferencesManager>()));
     gh.lazySingleton<_i865.SqfliteManagerBloc>(
         () => _i865.SqfliteManagerBloc(gh<_i316.SqfliteManagerRepository>()));
-    gh.lazySingleton<_i134.CommentRepository>(
-        () => _i134.CommentRepository(gh<_i370.CommentRemoteDS>()));
     gh.lazySingleton<_i85.UserRepository>(() => _i85.UserRepository(
           gh<_i706.UserRemoteDS>(),
           gh<_i493.UserLocalDS>(),
         ));
-    gh.factory<_i965.CommentBloc>(
-        () => _i965.CommentBloc(gh<_i134.CommentRepository>()));
     gh.lazySingleton<_i749.LocalizationRepository>(
         () => _i749.LocalizationRepository(
               gh<_i807.LocalizationLocalDS>(),
@@ -171,13 +153,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i321.AuthRemoteDS>(),
           gh<_i413.AuthLocalDS>(),
         ));
-    gh.lazySingleton<_i38.PostRepository>(
-        () => _i38.PostRepository(gh<_i751.PostRemoteDS>()));
     gh.lazySingleton<_i369.AuthBloc>(
         () => _i369.AuthBloc(gh<_i291.AuthRepository>()));
     gh.lazySingleton<_i626.ThemeRepository>(
         () => _i626.ThemeRepository(gh<_i91.ThemeLocalDS>()));
-    gh.factory<_i436.PostBloc>(() => _i436.PostBloc(gh<_i38.PostRepository>()));
     gh.lazySingleton<_i564.ThemeBloc>(
         () => _i564.ThemeBloc(gh<_i626.ThemeRepository>()));
     gh.factory<_i456.LoginBloc>(() => _i456.LoginBloc(

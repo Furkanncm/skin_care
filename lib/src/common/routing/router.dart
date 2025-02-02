@@ -1,14 +1,10 @@
 import 'package:bloc_clean_architecture/src/common/functions/my_functions.dart';
 import 'package:bloc_clean_architecture/src/common/routing/route_paths.dart';
-import 'package:bloc_clean_architecture/src/data/model/post/response/post.dart';
 import 'package:bloc_clean_architecture/src/presentation/bottom_navigation_bar/view/bottom_navigation_bar_view.dart';
-import 'package:bloc_clean_architecture/src/presentation/comment/view/comment_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/home/view/home_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/login/view/login_view.dart';
-import 'package:bloc_clean_architecture/src/presentation/post/view/post_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/profile/view/profile_edit_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/profile/view/profile_view.dart';
-import 'package:bloc_clean_architecture/src/presentation/service_unavailable/view/service_unavailable_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/settings/view/settings_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/shared_blocs/auth/bloc/auth_bloc.dart';
 import 'package:bloc_clean_architecture/src/presentation/splash/view/splash_view.dart';
@@ -37,11 +33,11 @@ GoRouter router = GoRouter(
     ),
 
     /// Service unavailable route
-    GoRoute(
-      path: RoutePaths.serviceUnavailable.asRoutePath,
-      name: RoutePaths.serviceUnavailable.name,
-      builder: (context, state) => const ServiceUnavailableView(),
-    ),
+    // GoRoute(
+    //   path: RoutePaths.serviceUnavailable.asRoutePath,
+    //   name: RoutePaths.serviceUnavailable.name,
+    //   builder: (context, state) => const ServiceUnavailableView(),
+    // ),
 
     /// Login route
     GoRoute(
@@ -74,19 +70,19 @@ GoRouter router = GoRouter(
                 ),
 
                 /// Post route
-                GoRoute(
-                  path: RoutePaths.post.asRoutePath,
-                  name: RoutePaths.post.name,
-                  builder: (context, state) => const PostView(),
-                  routes: [
-                    /// Comment route
-                    GoRoute(
-                      path: RoutePaths.comment.asRoutePath,
-                      name: RoutePaths.comment.name,
-                      builder: (context, state) => CommentView(post: state.extra! as Post),
-                    ),
-                  ],
-                ),
+                // GoRoute(
+                //   path: RoutePaths.post.asRoutePath,
+                //   name: RoutePaths.post.name,
+                //   builder: (context, state) => const PostView(),
+                //   routes: [
+                //     /// Comment route
+                //     GoRoute(
+                //       path: RoutePaths.comment.asRoutePath,
+                //       name: RoutePaths.comment.name,
+                //       builder: (context, state) => CommentView(post: state.extra! as Post),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ],

@@ -46,3 +46,4 @@ app.*.map.json
 .env
 .vscode/settings.json
 firebase.json
+pubspec.lock

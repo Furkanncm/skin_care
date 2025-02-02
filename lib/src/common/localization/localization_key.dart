@@ -69,8 +69,9 @@ enum LocalizationKey {
   ok('Ok'), // Tamam
   newVersionAvailable('NewVersionAvailable'), // Yeni versiyon mevcut
   applicationUnderMaintenance('ApplicationUnderMaintenance'), // Uygulama Bakımda
-  applicationUnderMaintenanceDescription('ApplicationUnderMaintenanceDescription') // Uygulamamız şu anda bakım çalışması nedeniyle kullanıma kapalıdır. Kısa süre içerisinde tekrar hizmetinizde olacağız.
-
+  applicationUnderMaintenanceDescription('ApplicationUnderMaintenanceDescription'), // Uygulamamız şu anda bakım çalışması nedeniyle kullanıma kapalıdır. Kısa süre içerisinde tekrar hizmetinizde olacağız.
+  dailyRoutine('Daily Routine'), 
+  goNow("Back to Today"),
   ;
 
   const LocalizationKey(this.value);
