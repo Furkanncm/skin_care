@@ -45,17 +45,17 @@ final class AppEntryMultiBlocListener extends StatelessWidget {
           final messageType = baseResponse.messages!.first.type;
           switch (messageType) {
             case MessageType.success:
-              MyToasts.showSuccessToast(
+              SCToasts.showSuccessToast(
                 message: baseResponse.messages!.map((message) => message.content).join('\n'),
               );
 
             case MessageType.info:
-              MyToasts.showInfoToast(
+              SCToasts.showInfoToast(
                 message: baseResponse.messages!.map((message) => message.content).join('\n'),
               );
 
             case MessageType.warning:
-              MyToasts.showWarningToast(
+              SCToasts.showWarningToast(
                 message: baseResponse.messages!.map((message) => message.content).join('\n'),
               );
 
@@ -94,11 +94,11 @@ final class AppEntryMultiBlocListener extends StatelessWidget {
         final baseResult = state.baseResult;
 
         if (state is SqfliteManagerSuccess) {
-          MyToasts.showSuccessToast(
+          SCToasts.showSuccessToast(
             message: LocalizationKey.operationSuccessful.tr(context),
           );
         } else if (state is SqfliteManagerError) {
-          MyToasts.showErrorToast(
+          SCToasts.showErrorToast(
             message: baseResult?.error?.toString() ?? LocalizationKey.unknownErrorOccured.tr(context),
           );
         }

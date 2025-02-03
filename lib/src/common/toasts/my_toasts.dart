@@ -1,7 +1,7 @@
 import 'package:bloc_clean_architecture/src/common/routing/router.dart';
 import 'package:flutter/material.dart';
 
-abstract class MyToasts {
+abstract class SCToasts {
   static void showSuccessToast({String? message}) => overlayManager.showToast(
         message: message,
         messageMaxLines: 20,

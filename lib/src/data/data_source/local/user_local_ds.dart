@@ -18,7 +18,7 @@ final class UserLocalDS implements IUserLocalDS {
   Future<bool> setUser({required MyUser user}) => _pref.setObject(key: SharedPrefKeys.user, value: user);
 
   @override
-  MyUser? getUser() => _pref.getObject<MyUser>(key: SharedPrefKeys.user, model: const MyUser());
+  MyUser? getUser() => _pref.getObject<MyUser>(key: SharedPrefKeys.user, model: MyUser());
 
   @override
   Future<bool> deleteUser() => _pref.remove(key: SharedPrefKeys.user);

@@ -1,8 +1,13 @@
 import 'package:bloc_clean_architecture/src/common/configuration/configuration.dart';
+import 'package:bloc_clean_architecture/src/common/constants/app_contants.dart';
 import 'package:bloc_clean_architecture/src/common/localization/localization_key.dart';
+import 'package:bloc_clean_architecture/src/common/routing/route_paths.dart';
 import 'package:bloc_clean_architecture/src/presentation/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_core/flutter_core.dart';
+
+import '../../../common/routing/router.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -25,7 +30,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(LocalizationKey.login.tr(context)),
+      centerTitle: true,
+      title: CoreText.headlineMedium(LocalizationKey.login.tr(context)),
     );
   }
 
@@ -38,12 +44,68 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          context.read<LoginBloc>().add(const LoginButtonPressedEvent());
-        },
-        child: const Text('Login'),
+    final bloc = context.read<LoginBloc>();
+    return Padding(
+      padding: AppConstants.paddingConstants.pagePadding,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Form(
+            key: bloc.formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: bloc.emailController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                    labelText: LocalizationKey.email.value,
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) => value?.isEmail ?? false ? null : LocalizationKey.inValidEmail.value,
+                ),
+                verticalBox16,
+                CorePasswordTextField(
+                  controller: bloc.passwordController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  labelText: LocalizationKey.password.value,
+                  validator: (value) {
+                    if (value == null) return null;
+                    if (value.isEmpty) {
+                      return LocalizationKey.cantEmptyPassword.value;
+                    } else if (value.length < 6) {
+                      return LocalizationKey.password6char.value;
+                    } else if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(value)) {
+                      return LocalizationKey.passwordbigChar.value;
+                    } else if (!RegExp(r'^(?=.*?[0-9])').hasMatch(value)) {
+                      return LocalizationKey.password1number.value;
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          verticalBox12,
+          Align(
+            alignment: Alignment.topRight,
+            child: GestureDetector(onTap: () => router.pushNamed(RoutePaths.signUp.name), child: CoreText.bodyMedium(LocalizationKey.createAccount.value)),
+          ),
+          verticalBox12,
+          SizedBox(
+            width: context.width / 2,
+            child: CoreOutlinedButton.autoIndicator(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CoreText.bodyLarge(LocalizationKey.login.tr(context)),
+                  horizontalBox20,
+                  Icon(Icons.login_outlined),
+                ],
+              ),
+              onPressed: () => bloc.add(LoginButtonPressedEvent()),
+            ),
+          )
+        ],
       ),
     );
   }

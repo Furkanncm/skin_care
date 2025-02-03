@@ -24,7 +24,7 @@ final class UserRemoteDS implements IUserRemoteDS {
 
     // ignore: inference_failure_on_instance_creation
     await Future.delayed(500.milliseconds);
-    return const BaseResponse(
+    return  BaseResponse(
       data: MyUser(
         id: '0f8fad5b-d9cb-469f-a165-70867728950e',
         userName: 'admin',
@@ -35,6 +35,7 @@ final class UserRemoteDS implements IUserRemoteDS {
         phone: '',
         isActive: true,
         language: 'en-US',
+        password: "asdasdasdadasda"
       ),
       succeeded: true,
       messages: [

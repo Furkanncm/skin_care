@@ -8,19 +8,22 @@ part 'localization_key_extension.dart';
 
 enum LocalizationKey {
   login('Login'), // Giriş Yap
-  createAccount('CreateAccount'), // Hesap Oluştur
+  signUp('Sign Up'),
+  createAccount('Create Account'), // Hesap Oluştur
+  alreadyHaveAccount(" Already have an account?"),
   username('Username'), // Kullanıcı Adı
-  nameSurname('NameSurname'), // Ad Soyad
+  name('Name'), // ad
+  surname('Surname'),
   phoneNumber('PhoneNumber'), // Telefon Numarası
   phoneNumberMustStartWithFive('PhoneNumberMustStartWithFive'), // Telefon Numarası 5 ile başlamalıdır
   phoneNumberMustBeTenDigits('PhoneNumberMustBeTenDigits'), // Telefon numarası 10 haneli olmalıdır
   nameAndSurnameMustBeAtLeastTwoCharacters('NameAndSurnameMustBeAtLeastTwoCharacters'), // Ad ve soyad en az 2 karakterden oluşmalıdır
-  fieldRequired('FieldRequired'), // Zorunlu alan
+  fieldRequired('Field Required'), // Zorunlu alan
   passwordMustBeAtLeastFourCharacters('PasswordMustBeAtLeastFourCharacters'), // Şifre en az 4 karakter olmalıdır
   enterValidEmail('EnterValidEmail'), // Geçerli bir e-posta adresi giriniz
   passwordsDoNotMatch('PasswordsDoNotMatch'), // Şifreler eşleşmiyor
   password('Password'), // Şifre
-  passwordAgain('PasswordAgain'), // Şifre Tekrar
+  passwordAgain('Password Again'), // Şifre Tekrar
   forgotPassword('ForgotPassword'), // Şifremi Unuttum
   email('Email'), // E-posta
   sendCode('SendCode'), // Kod Gönder
@@ -70,8 +73,13 @@ enum LocalizationKey {
   newVersionAvailable('NewVersionAvailable'), // Yeni versiyon mevcut
   applicationUnderMaintenance('ApplicationUnderMaintenance'), // Uygulama Bakımda
   applicationUnderMaintenanceDescription('ApplicationUnderMaintenanceDescription'), // Uygulamamız şu anda bakım çalışması nedeniyle kullanıma kapalıdır. Kısa süre içerisinde tekrar hizmetinizde olacağız.
-  dailyRoutine('Daily Routine'), 
+  dailyRoutine('Daily Routine'),
   goNow("Back to Today"),
+  inValidEmail("Invalid Email "),
+  cantEmptyPassword("Password can not be empty"),
+  password6char("Password must be at least 6 characters"),
+  passwordbigChar("Password must be at least 1 upper case character"),
+  password1number("Password must be at least 1 number "),
   ;
 
   const LocalizationKey(this.value);

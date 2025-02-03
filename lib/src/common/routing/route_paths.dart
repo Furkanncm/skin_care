@@ -3,6 +3,7 @@ enum RoutePaths {
   splash('/'),
   serviceUnavailable('/serviceUnavailable'),
   login('/login'),
+  signUp('/signUp'),
   home('/home'),
   todo('todo'),
   post('post'),

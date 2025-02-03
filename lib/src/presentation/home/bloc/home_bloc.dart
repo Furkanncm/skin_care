@@ -19,6 +19,33 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   bool isDayInWeek = true;
   Future<void> _initialize(HomeEvent event, Emitter<HomeState> emit) async {
+    // await FirebaseFirestore.instance.collection('users').doc("1").set({
+    //   'name': "Betül",
+    //   'email': "beul.anac@gmail.com",
+    //   'phone': 5524780817,
+    //   'password':"1234567"
+    // });
+
+// await FirebaseFirestore.instance
+//       .collection('users')
+//       .doc("1")
+//       .collection('cosmetics')
+//       .add({
+//     'name': "C vitamini",
+//     'brand': "korendy",
+//     'category': "Vitamin",
+//     'description': "Sadece sabahları tonik sonrası ilk kullanılır",
+
+//   });
+
+//    await FirebaseFirestore.instance
+//       .collection('users')
+//       .doc("1")
+//       .collection('plans')
+//       .doc(DateTime.now().toString()) // YYYY-MM-DD formatında
+//       .set({
+//     'morning': FieldValue.arrayUnion([1])
+//   }, SetOptions(merge: true));
     await 300.milliseconds.delay<void>();
     emit(state.copyWith(status: HomeStatus.success, currentDay: DateTime.now()));
   }

@@ -7,6 +7,7 @@ import 'package:bloc_clean_architecture/src/presentation/profile/view/profile_ed
 import 'package:bloc_clean_architecture/src/presentation/profile/view/profile_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/settings/view/settings_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/shared_blocs/auth/bloc/auth_bloc.dart';
+import 'package:bloc_clean_architecture/src/presentation/sign_up/view/sign_up_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/splash/view/splash_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/todo/view/todo_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,6 +45,13 @@ GoRouter router = GoRouter(
       path: RoutePaths.login.asRoutePath,
       name: RoutePaths.login.name,
       builder: (context, state) => const LoginView(),
+      routes: [
+        GoRoute(
+          path: RoutePaths.signUp.asRoutePath,
+          name: RoutePaths.signUp.name,
+          builder: (context, state) => const SignUpView(),
+        ),
+      ],
     ),
 
     /// Bottom navigation bar route
@@ -131,7 +139,7 @@ GoRouter router = GoRouter(
       final fullPath = state.fullPath;
 
       return switch (MyFunctions.convertFullPathToEnum(fullPath)) {
-        RoutePaths.login || RoutePaths.serviceUnavailable => null,
+        RoutePaths.signUp || RoutePaths.login || RoutePaths.serviceUnavailable => null,
         _ => RoutePaths.login.asRoutePath,
       };
     }

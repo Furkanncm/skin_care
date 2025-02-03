@@ -8,17 +8,7 @@ part 'my_user.g.dart';
 @immutable
 @JsonSerializable()
 final class MyUser extends BaseModel<MyUser> with EquatableMixin {
-  const MyUser({
-    this.userName,
-    this.id,
-    this.name,
-    this.surName,
-    this.title,
-    this.email,
-    this.phone,
-    this.isActive,
-    this.language,
-  });
+  MyUser({this.userName, this.id, this.name, this.surName, this.title, this.email, this.phone, this.isActive, this.language, this.password});
 
   const MyUser.notValid()
       : userName = null,
@@ -29,7 +19,8 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
         email = null,
         phone = null,
         isActive = null,
-        language = null;
+        language = null,
+        password = null;
 
   factory MyUser.fromJson(Map<String, dynamic> json) => _$MyUserFromJson(json);
 
@@ -42,6 +33,7 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
   final String? phone;
   final bool? isActive;
   final String? language;
+  final String? password;
 
   @override
   MyUser fromJson(Map<String, Object?> json) => _$MyUserFromJson(json);
@@ -60,6 +52,7 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
         phone,
         isActive,
         language,
+        password,
       ];
 
   MyUser copyWith({
@@ -72,6 +65,7 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
     String? phone,
     bool? isActive,
     String? language,
+    String? password,
   }) {
     return MyUser(
       userName: userName ?? this.userName,
@@ -83,6 +77,7 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
       phone: phone ?? this.phone,
       isActive: isActive ?? this.isActive,
       language: language ?? this.language,
+      password: password??this.password
     );
   }
 }

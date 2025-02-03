@@ -28,6 +28,7 @@ dependencies:
   firebase_crashlytics: ^4.0.1
   firebase_performance: ^0.10.0+1
   firebase_core: ^3.1.0
+  cloud_firestore: ^5.6.2
 
   # State management
   bloc: ^9.0.0
@@ -56,6 +57,7 @@ dependencies:
   flutter_gen: ^5.4.0
   path_provider: ^2.1.5
   flutter_staggered_grid_view: ^0.7.0
+  firebase_auth: ^5.4.1
 
 dev_dependencies:
   flutter_test:
