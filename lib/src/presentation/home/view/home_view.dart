@@ -23,8 +23,15 @@ final class HomeView extends StatelessWidget {
               return AdaptiveIndicator();
             } else {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _HeaderAndCalendar(),
+                  verticalBox4,
+                  Padding(
+                    padding: AppConstants.paddingConstants.pageLowPadding,
+                    child: CoreText.bodyLarge("Welcome to Skin Care For ${state.user?.name ?? "Our Guest"} "),
+                  ),
+                  verticalBox4,
                   Expanded(
                     child: GridView.builder(
                       itemCount: 10,

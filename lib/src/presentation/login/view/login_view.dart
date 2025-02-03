@@ -9,7 +9,8 @@ import 'package:flutter_core/flutter_core.dart';
 
 import '../../../common/routing/router.dart';
 
-class LoginView extends StatelessWidget {
+@immutable
+final class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
@@ -24,7 +25,8 @@ class LoginView extends StatelessWidget {
   }
 }
 
-class _AppBar extends StatelessWidget implements PreferredSizeWidget {
+@immutable
+final class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar();
 
   @override
@@ -39,7 +41,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _Body extends StatelessWidget {
+@immutable
+final class _Body extends StatelessWidget {
   const _Body();
 
   @override
@@ -54,58 +57,91 @@ class _Body extends StatelessWidget {
             key: bloc.formKey,
             child: Column(
               children: [
-                TextFormField(
-                  controller: bloc.emailController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: InputDecoration(
-                    labelText: LocalizationKey.email.value,
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) => value?.isEmail ?? false ? null : LocalizationKey.inValidEmail.value,
-                ),
+                _EmailField(),
                 verticalBox16,
-                CorePasswordTextField(
-                  controller: bloc.passwordController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  labelText: LocalizationKey.password.value,
-                  validator: (value) {
-                    if (value == null) return null;
-                    if (value.isEmpty) {
-                      return LocalizationKey.cantEmptyPassword.value;
-                    } else if (value.length < 6) {
-                      return LocalizationKey.password6char.value;
-                    } else if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(value)) {
-                      return LocalizationKey.passwordbigChar.value;
-                    } else if (!RegExp(r'^(?=.*?[0-9])').hasMatch(value)) {
-                      return LocalizationKey.password1number.value;
-                    }
-                    return null;
-                  },
-                ),
+                _PasswordField(),
               ],
             ),
           ),
           verticalBox12,
           Align(
             alignment: Alignment.topRight,
-            child: GestureDetector(onTap: () => router.pushNamed(RoutePaths.signUp.name), child: CoreText.bodyMedium(LocalizationKey.createAccount.value)),
+            child: GestureDetector(onTap: () => router.goNamed(RoutePaths.signUp.name), child: CoreText.bodyMedium(LocalizationKey.createAccount.value)),
           ),
           verticalBox12,
-          SizedBox(
-            width: context.width / 2,
-            child: CoreOutlinedButton.autoIndicator(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CoreText.bodyLarge(LocalizationKey.login.tr(context)),
-                  horizontalBox20,
-                  Icon(Icons.login_outlined),
-                ],
-              ),
-              onPressed: () => bloc.add(LoginButtonPressedEvent()),
-            ),
-          )
+          _LoginButton()
         ],
+      ),
+    );
+  }
+}
+
+@immutable
+final class _EmailField extends StatelessWidget {
+  const _EmailField();
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<LoginBloc>();
+    return TextFormField(
+      controller: bloc.emailController,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      decoration: InputDecoration(
+        labelText: LocalizationKey.email.value,
+        border: OutlineInputBorder(),
+      ),
+      validator: (value) => value?.isEmail ?? false ? null : LocalizationKey.inValidEmail.value,
+    );
+  }
+}
+
+@immutable
+final class _PasswordField extends StatelessWidget {
+  const _PasswordField();
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<LoginBloc>();
+    return CorePasswordTextField(
+      controller: bloc.passwordController,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      labelText: LocalizationKey.password.value,
+      validator: (value) {
+        if (value == null) return null;
+        if (value.isEmpty) {
+          return LocalizationKey.cantEmptyPassword.value;
+        } else if (value.length < 6) {
+          return LocalizationKey.password6char.value;
+        } else if (!RegExp(r'^(?=.*?[A-Z])').hasMatch(value)) {
+          return LocalizationKey.passwordbigChar.value;
+        } else if (!RegExp(r'^(?=.*?[0-9])').hasMatch(value)) {
+          return LocalizationKey.password1number.value;
+        }
+        return null;
+      },
+    );
+  }
+}
+
+@immutable
+final class _LoginButton extends StatelessWidget {
+  const _LoginButton();
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<LoginBloc>();
+    return SizedBox(
+      width: context.width / 2,
+      child: CoreOutlinedButton.autoIndicator(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CoreText.bodyLarge(LocalizationKey.login.tr(context)),
+            horizontalBox20,
+            Icon(Icons.login_outlined),
+          ],
+        ),
+        onPressed: () => bloc.add(LoginButtonPressedEvent()),
       ),
     );
   }

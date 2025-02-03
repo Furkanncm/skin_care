@@ -50,33 +50,35 @@ final class _Body extends StatelessWidget {
     final bloc = context.read<SignUpBloc>();
     return Padding(
       padding: AppConstants.paddingConstants.pagePadding,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Form(
-            key: bloc.formKey,
-            child: Column(
-              children: [
-                _NameField(),
-                verticalBox16,
-                _SurnameField(),
-                verticalBox16,
-                _EmailField(),
-                verticalBox16,
-                _PasswordField(),
-                verticalBox16,
-                _PasswordAgainField(),
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Form(
+              key: bloc.formKey,
+              child: Column(
+                children: [
+                  _NameField(),
+                  verticalBox16,
+                  _SurnameField(),
+                  verticalBox16,
+                  _EmailField(),
+                  verticalBox16,
+                  _PasswordField(),
+                  verticalBox16,
+                  _PasswordAgainField(),
+                ],
+              ),
             ),
-          ),
-          verticalBox12,
-          Align(
-            alignment: Alignment.topRight,
-            child: GestureDetector(onTap: () => router.pushNamed(RoutePaths.login.name), child: CoreText.bodyMedium(LocalizationKey.alreadyHaveAccount.value)),
-          ),
-          verticalBox16,
-          _SignUpButton()
-        ],
+            verticalBox12,
+            Align(
+              alignment: Alignment.topRight,
+              child: GestureDetector(onTap: () => router.goNamed(RoutePaths.login.name), child: CoreText.bodyMedium(LocalizationKey.alreadyHaveAccount.value)),
+            ),
+            verticalBox16,
+            _SignUpButton()
+          ],
+        ),
       ),
     );
   }
@@ -181,7 +183,7 @@ final class _PasswordAgainField extends StatelessWidget {
       validator: (value) {
         if (value == null) return null;
         if (value != bloc.passwordController.text) {
-          return LocalizationKey.passwordAgain.value;
+          return LocalizationKey.passwordsDoNotMatch.value;
         }
         return null;
       },
@@ -206,7 +208,7 @@ final class _SignUpButton extends StatelessWidget {
             Icon(Icons.login_outlined),
           ],
         ),
-        onPressed: () {},
+        onPressed: () => context.read<SignUpBloc>().add(SignUpButtonPressedEvent()),
       ),
     );
   }

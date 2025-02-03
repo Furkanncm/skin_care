@@ -98,10 +98,8 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i827.HomeBloc>(() => _i827.HomeBloc());
     gh.factory<_i982.SplashBloc>(() => _i982.SplashBloc());
     gh.factory<_i240.CounterCubit>(() => _i240.CounterCubit());
-    gh.factory<_i378.SignUpBloc>(() => _i378.SignUpBloc());
     gh.singleton<_i308.SqfliteManager>(() => _i308.SqfliteManager());
     gh.lazySingleton<_i890.NetworkManager>(() => _i890.NetworkManager());
     gh.lazySingleton<_i152.SharedPreferencesManager>(
@@ -162,11 +160,19 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i626.ThemeRepository(gh<_i91.ThemeLocalDS>()));
     gh.lazySingleton<_i564.ThemeBloc>(
         () => _i564.ThemeBloc(gh<_i626.ThemeRepository>()));
+    gh.factory<_i827.HomeBloc>(() => _i827.HomeBloc(
+          gh<_i291.AuthRepository>(),
+          gh<_i85.UserRepository>(),
+        ));
     gh.factory<_i456.LoginBloc>(() => _i456.LoginBloc(
           gh<_i291.AuthRepository>(),
           gh<_i85.UserRepository>(),
         ));
     gh.factory<_i486.ProfileCubit>(() => _i486.ProfileCubit(
+          gh<_i291.AuthRepository>(),
+          gh<_i85.UserRepository>(),
+        ));
+    gh.factory<_i378.SignUpBloc>(() => _i378.SignUpBloc(
           gh<_i291.AuthRepository>(),
           gh<_i85.UserRepository>(),
         ));

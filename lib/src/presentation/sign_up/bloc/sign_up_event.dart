@@ -7,3 +7,5 @@ sealed class SignUpEvent extends Equatable {
   List<Object> get props => [];
 }
 final class SignUpInitializedEvent extends SignUpEvent {}
+
+final class SignUpButtonPressedEvent extends SignUpEvent {}

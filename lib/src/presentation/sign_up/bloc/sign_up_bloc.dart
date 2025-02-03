@@ -1,16 +1,29 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
+import 'package:bloc_clean_architecture/src/common/extensions/future_extension.dart';
+import 'package:bloc_clean_architecture/src/common/toasts/my_toasts.dart';
+import 'package:bloc_clean_architecture/src/data/model/my_user/my_user.dart';
+import 'package:bloc_clean_architecture/src/presentation/shared_blocs/auth/bloc/auth_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core/flutter_core.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../common/routing/route_paths.dart';
+import '../../../common/routing/router.dart';
+import '../../../domain/auth/auth_repository.dart';
+import '../../../domain/user/user_repository.dart';
 
 part 'sign_up_event.dart';
 part 'sign_up_state.dart';
 
 @injectable
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  SignUpBloc() : super(SignUpState()) {
+  SignUpBloc(this._authRepository, this._userRepository) : super(SignUpState()) {
     on<SignUpInitializedEvent>(_initialize);
+    on<SignUpButtonPressedEvent>(_signUpButtonPressedEvent);
   }
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -19,9 +32,33 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordAgainController = TextEditingController();
+  final UserRepository _userRepository;
+  final AuthRepository _authRepository;
 
   Future<void> _initialize(SignUpEvent event, Emitter<SignUpState> emit) async {
     await 300.milliseconds.delay<void>();
     emit(state.copyWith(status: SignUpStatus.success));
+  }
+
+  Future<void> _signUpButtonPressedEvent(SignUpButtonPressedEvent event, Emitter<SignUpState> emit) async {
+    if (!(formKey.currentState!.validate())) return;
+    final name = nameController.text;
+    final surname = surnameController.text;
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    try {
+      final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).withIndicator();
+      final user = MyUser(name: name, surName: surname, email: email, id: userCredential.user!.uid, password: password);
+      final isOk = await _userRepository.setLocalUser(user: user);
+      if (isOk) router.pushReplacementNamed(RoutePaths.home.name);
+      _authRepository.changeAuthState(authState: AuthState.authenticated());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        SCToasts.showErrorToast(message: "Bu e-posta adresi zaten kullanılıyor!");
+      } else {
+        SCToasts.showErrorToast(message: "Bir hata oluştu: ${e.message}");
+      }
+    }
   }
 }

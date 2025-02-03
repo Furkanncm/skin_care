@@ -5,12 +5,16 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_core/flutter_core.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../data/model/my_user/my_user.dart';
+import '../../../domain/auth/auth_repository.dart';
+import '../../../domain/user/user_repository.dart';
+
 part 'home_event.dart';
 part 'home_state.dart';
 
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeState()) {
+  HomeBloc(this._authRepository, this._userRepository) : super(HomeState()) {
     on<HomeInitializedEvent>(_initialize);
     on<HomeDayChangedEvent>(_homeDayChangedEvent);
     on<HomeBackToTodayEvent>(_homeBackToTodayEvent);
@@ -18,6 +22,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   bool isDayInWeek = true;
+
+  final AuthRepository _authRepository;
+  final UserRepository _userRepository;
   Future<void> _initialize(HomeEvent event, Emitter<HomeState> emit) async {
     // await FirebaseFirestore.instance.collection('users').doc("1").set({
     //   'name': "Betül",
@@ -46,10 +53,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 //       .set({
 //     'morning': FieldValue.arrayUnion([1])
 //   }, SetOptions(merge: true));
+    final user = _userRepository.getLocalUser();
+    if (user == null) return;
+    emit(state.copyWith(user: user));
     await 300.milliseconds.delay<void>();
     emit(state.copyWith(status: HomeStatus.success, currentDay: DateTime.now()));
   }
-
+//furkan@gmail.com
+//betul@gmail.com
   Future<void> _homeDayChangedEvent(HomeDayChangedEvent event, Emitter<HomeState> emit) async {
     emit(state.copyWith(currentDay: event.currentDay));
     isDayInWeek = isDayInWeekFunc(event.currentDay);
