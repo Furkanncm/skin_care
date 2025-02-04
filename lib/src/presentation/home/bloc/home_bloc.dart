@@ -26,13 +26,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final AuthRepository _authRepository;
   final UserRepository _userRepository;
   Future<void> _initialize(HomeEvent event, Emitter<HomeState> emit) async {
-    // await FirebaseFirestore.instance.collection('users').doc("1").set({
-    //   'name': "Betül",
-    //   'email': "beul.anac@gmail.com",
-    //   'phone': 5524780817,
-    //   'password':"1234567"
-    // });
-
+ 
 // await FirebaseFirestore.instance
 //       .collection('users')
 //       .doc("1")

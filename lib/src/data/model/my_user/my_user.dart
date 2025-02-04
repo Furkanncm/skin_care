@@ -38,6 +38,23 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
   @override
   MyUser fromJson(Map<String, Object?> json) => _$MyUserFromJson(json);
 
+
+ // Firestore'dan gelen veriyi UserModel'e çeviren fonksiyon
+  factory MyUser.fromMap(String id, Map<String, dynamic> data) {
+    return MyUser(
+      id: id,
+      userName: data['userName'] as String?,
+      name: data['name'] as String?,
+      surName: data['surName'] as String?,
+      title: data['title'] as String?,
+      email: data['email'] as String?,
+      phone: data['phone'] as String?,
+      isActive: data['isActive'] as bool?,
+      language: data['language'] as String?,
+      password: data['password'] as String?,
+    );
+  }
+
   @override
   Map<String, Object?> toJson() => _$MyUserToJson(this);
 

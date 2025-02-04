@@ -29,9 +29,8 @@ final class HomeView extends StatelessWidget {
                   verticalBox4,
                   Padding(
                     padding: AppConstants.paddingConstants.pageLowPadding,
-                    child: CoreText.bodyLarge("Welcome to Skin Care For ${state.user?.name ?? "Our Guest"} "),
+                    child: CoreText.bodyLarge((state.user?.name?.toUpperCase() ?? "") + LocalizationKey.sloganWithUserName.value),
                   ),
-                  verticalBox4,
                   Expanded(
                     child: GridView.builder(
                       itemCount: 10,
@@ -43,7 +42,7 @@ final class HomeView extends StatelessWidget {
                       ),
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: AppConstants.paddingConstants.pageLowPadding,
+                          padding: AppConstants.paddingConstants.horizontalPadding,
                           child: Container(
                             decoration: BoxDecoration(
                               color: context.colorScheme.secondary,
@@ -119,7 +118,7 @@ final class _HeaderAndCalendar extends StatelessWidget {
       height: context.height * 0.35,
       width: context.width,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
@@ -238,7 +237,7 @@ final class _TodayColumnWidget extends StatelessWidget {
         verticalBox8,
         CoreText.bodyLarge(day.toDayName().truncateToLength(length: 3, suffix: "")),
         verticalBox8,
-        CircleAvatar(radius: 15, backgroundColor: Colors.blue, child: CoreText.bodyLarge(day.day.toString())),
+        CircleAvatar(radius: 15, backgroundColor: context.colorScheme.primary, child: CoreText.bodyLarge(day.day.toString())),
       ],
     );
   }
@@ -254,11 +253,11 @@ final class _TodayWidgetsIndent extends StatelessWidget {
       width: context.width * 0.05,
       height: context.height * 0.004,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: context.colorScheme.primary,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue.withOpacity(0.3),
+            color: context.colorScheme.primary.withOpacity(0.3),
             spreadRadius: 2,
             blurRadius: 8,
             offset: Offset(4, 4),
@@ -284,7 +283,7 @@ final class _NotTodayCardBuilder extends StatelessWidget {
         borderRadius: BorderRadius.all(
           Radius.circular(10),
         ),
-        color: Colors.white,
+        color: context.colorScheme.surface,
       ),
       child: _NotTodayColumnWidget(day: day),
     );
@@ -304,7 +303,7 @@ final class _NotTodayColumnWidget extends StatelessWidget {
         verticalBox8,
         CoreText.bodyLarge(day.toDayName().truncateToLength(length: 3, suffix: "")),
         verticalBox8,
-        CircleAvatar(radius: 15, backgroundColor: Colors.white, child: CoreText.bodyLarge(day.day.toString())),
+        CircleAvatar(radius: 15, backgroundColor: context.colorScheme.surface, child: CoreText.bodyLarge(day.day.toString())),
       ],
     );
   }

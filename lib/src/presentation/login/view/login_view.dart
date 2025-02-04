@@ -18,27 +18,10 @@ final class LoginView extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<LoginBloc>(),
       child: const Scaffold(
-        appBar: _AppBar(),
         body: _Body(),
       ),
     );
   }
-}
-
-@immutable
-final class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar();
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      title: CoreText.headlineMedium(LocalizationKey.login.tr(context)),
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 @immutable
@@ -48,29 +31,39 @@ final class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<LoginBloc>();
-    return Padding(
-      padding: AppConstants.paddingConstants.pagePadding,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Form(
-            key: bloc.formKey,
-            child: Column(
-              children: [
-                _EmailField(),
-                verticalBox16,
-                _PasswordField(),
-              ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: AppConstants.paddingConstants.pagePadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            verticalBox64 + verticalBox64 + verticalBox64,
+            CoreText.headlineMedium(LocalizationKey.welcome.value, fontWeight: FontWeight.bold, textColor: context.colorScheme.primary),
+            verticalBox8,
+            CoreText.bodyLarge(LocalizationKey.firstLogin.value, textColor: context.colorScheme.onSurface.withOpacity(0.4)),
+            verticalBox64 + verticalBox64,
+            Form(
+              key: bloc.formKey,
+              child: Column(
+                children: [
+                  _EmailField(),
+                  verticalBox16,
+                  _PasswordField(),
+                ],
+              ),
             ),
-          ),
-          verticalBox12,
-          Align(
-            alignment: Alignment.topRight,
-            child: GestureDetector(onTap: () => router.goNamed(RoutePaths.signUp.name), child: CoreText.bodyMedium(LocalizationKey.createAccount.value)),
-          ),
-          verticalBox12,
-          _LoginButton()
-        ],
+            verticalBox16,
+            Align(
+              alignment: Alignment.topRight,
+              child: GestureDetector(onTap: () {}, child: CoreText.bodyMedium(LocalizationKey.forgotPassword.value, textColor: context.colorScheme.primary)),
+            ),
+            verticalBox32,
+            _LoginButton(),
+            verticalBox16,
+            _NoAccountField()
+          ],
+        ),
       ),
     );
   }
@@ -87,6 +80,7 @@ final class _EmailField extends StatelessWidget {
       controller: bloc.emailController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
+        prefixIcon: Icon(Icons.email_outlined),
         labelText: LocalizationKey.email.value,
         border: OutlineInputBorder(),
       ),
@@ -103,6 +97,7 @@ final class _PasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<LoginBloc>();
     return CorePasswordTextField(
+      prefixIcon: Icon(Icons.lock_outline_rounded),
       controller: bloc.passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       labelText: LocalizationKey.password.value,
@@ -130,19 +125,26 @@ final class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<LoginBloc>();
-    return SizedBox(
-      width: context.width / 2,
-      child: CoreOutlinedButton.autoIndicator(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CoreText.bodyLarge(LocalizationKey.login.tr(context)),
-            horizontalBox20,
-            Icon(Icons.login_outlined),
-          ],
-        ),
-        onPressed: () => bloc.add(LoginButtonPressedEvent()),
-      ),
+    return CoreOutlinedButton.autoIndicator(
+      child: Center(child: CoreText.bodyLarge(LocalizationKey.login.tr(context))),
+      onPressed: () => bloc.add(LoginButtonPressedEvent()),
+    );
+  }
+}
+
+@immutable
+final class _NoAccountField extends StatelessWidget {
+  const _NoAccountField();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CoreText.bodyMedium(LocalizationKey.noAccount.value, textColor: context.colorScheme.onSurface.withOpacity(0.4)),
+        horizontalBox4,
+        GestureDetector(onTap: () => router.pushReplacementNamed(RoutePaths.signUp.name), child: CoreText.bodyMedium(LocalizationKey.signUp.value, textColor: context.colorScheme.primary)),
+      ],
     );
   }
 }

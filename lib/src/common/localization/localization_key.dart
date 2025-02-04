@@ -24,7 +24,7 @@ enum LocalizationKey {
   passwordsDoNotMatch('PasswordsDoNotMatch'), // Şifreler eşleşmiyor
   password('Password'), // Şifre
   passwordAgain('Password Again'), // Şifre Tekrar
-  forgotPassword('ForgotPassword'), // Şifremi Unuttum
+  forgotPassword('Forgot Password?'), // Şifremi Unuttum
   email('Email'), // E-posta
   sendCode('SendCode'), // Kod Gönder
   myProfile('MyProfile'), // Profilim
@@ -80,6 +80,13 @@ enum LocalizationKey {
   password6char("Password must be at least 6 characters"),
   passwordbigChar("Password must be at least 1 upper case character"),
   password1number("Password must be at least 1 number "),
+  welcome("Welcome!"),
+  firstLogin("Please log in to continue"),
+  noAccount("You don't have an account?"),
+  slogan("Your skin glows with you! 🌿✨ Create your own skincare routine and shine!"),
+  sloganWithUserName(", your skin deserves the best! ✨🌿 Create your perfect skincare routine today!"),
+  sloganForLogin("Radiant skin, confident you! 🌸✨ Start your skincare journey today!"),
+  accountCreatedSuccess("Your account has been created successfully."),
   ;
 
   const LocalizationKey(this.value);

@@ -18,27 +18,10 @@ final class SignUpView extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<SignUpBloc>(),
       child: const Scaffold(
-        appBar: _AppBar(),
         body: _Body(),
       ),
     );
   }
-}
-
-@immutable
-final class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar();
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      centerTitle: true,
-      title: CoreText.headlineMedium(LocalizationKey.signUp.tr(context)),
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 @immutable
@@ -48,19 +31,23 @@ final class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<SignUpBloc>();
-    return Padding(
-      padding: AppConstants.paddingConstants.pagePadding,
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: AppConstants.paddingConstants.pagePadding,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            verticalBox64 + verticalBox32,
+            CoreText.headlineMedium(LocalizationKey.signUp.value, fontWeight: FontWeight.bold, textColor: context.colorScheme.primary),
+            verticalBox8,
+            CoreText.bodyLarge(LocalizationKey.slogan.value, textColor: context.colorScheme.onSurface.withOpacity(0.4)),
+            verticalBox64,
             Form(
               key: bloc.formKey,
               child: Column(
                 children: [
-                  _NameField(),
-                  verticalBox16,
-                  _SurnameField(),
+                  _NameAndSurnameField(),
                   verticalBox16,
                   _EmailField(),
                   verticalBox16,
@@ -70,16 +57,36 @@ final class _Body extends StatelessWidget {
                 ],
               ),
             ),
-            verticalBox12,
-            Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(onTap: () => router.goNamed(RoutePaths.login.name), child: CoreText.bodyMedium(LocalizationKey.alreadyHaveAccount.value)),
-            ),
+            verticalBox48,
+            _SignUpButton(),
             verticalBox16,
-            _SignUpButton()
+            _HaveAccountField()
           ],
         ),
       ),
+    );
+  }
+}
+
+@immutable
+final class _NameAndSurnameField extends StatelessWidget {
+  const _NameAndSurnameField();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: _NameField(),
+        )),
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: _SurnameField(),
+        )),
+      ],
     );
   }
 }
@@ -95,6 +102,7 @@ final class _NameField extends StatelessWidget {
       controller: bloc.nameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
+        prefixIcon: Icon(Icons.person_2_outlined),
         labelText: LocalizationKey.name.value,
         border: OutlineInputBorder(),
       ),
@@ -114,6 +122,7 @@ final class _SurnameField extends StatelessWidget {
       controller: bloc.surnameController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
+        prefixIcon: Icon(Icons.person_2_outlined),
         labelText: LocalizationKey.surname.value,
         border: OutlineInputBorder(),
       ),
@@ -133,6 +142,7 @@ final class _EmailField extends StatelessWidget {
       controller: bloc.emailController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
+        prefixIcon: Icon(Icons.email_outlined),
         labelText: LocalizationKey.email.value,
         border: OutlineInputBorder(),
       ),
@@ -149,6 +159,7 @@ final class _PasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<SignUpBloc>();
     return CorePasswordTextField(
+      prefixIcon: Icon(Icons.lock_outline_rounded),
       controller: bloc.passwordController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       labelText: LocalizationKey.password.value,
@@ -177,6 +188,7 @@ final class _PasswordAgainField extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<SignUpBloc>();
     return CorePasswordTextField(
+      prefixIcon: Icon(Icons.lock_outline_rounded),
       controller: bloc.passwordAgainController,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       labelText: LocalizationKey.passwordAgain.value,
@@ -197,19 +209,26 @@ final class _SignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: context.width / 2,
-      child: CoreOutlinedButton.autoIndicator(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CoreText.bodyLarge(LocalizationKey.signUp.tr(context)),
-            horizontalBox20,
-            Icon(Icons.login_outlined),
-          ],
-        ),
-        onPressed: () => context.read<SignUpBloc>().add(SignUpButtonPressedEvent()),
-      ),
+    return CoreOutlinedButton.autoIndicator(
+      child: Center(child: CoreText.bodyLarge(LocalizationKey.signUp.tr(context))),
+      onPressed: () => context.read<SignUpBloc>().add(SignUpButtonPressedEvent()),
+    );
+  }
+}
+
+@immutable
+final class _HaveAccountField extends StatelessWidget {
+  const _HaveAccountField();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CoreText.bodyMedium(LocalizationKey.alreadyHaveAccount.value, textColor: context.colorScheme.onSurface.withOpacity(0.4)),
+        horizontalBox4,
+        GestureDetector(onTap: () => router.pushReplacementNamed(RoutePaths.login.name), child: CoreText.bodyMedium(LocalizationKey.login.value, textColor: context.colorScheme.primary)),
+      ],
     );
   }
 }
