@@ -11,7 +11,8 @@ import '../../../common/theme/bloc/theme_bloc.dart';
 import '../../../common/widgets/adaptive_indicator/adaptive_indicator.dart';
 import '../../../data/model/color_scheme/dto/color_scheme_dto.dart';
 
-class ProfileView extends StatefulWidget {
+@immutable
+final class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
 
   @override
@@ -43,12 +44,12 @@ final class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Padding(
-        padding: AppConstants.paddingConstants.horizontalPadding,
-        child: CoreText.headlineMedium(
-          LocalizationKey.settings.value,
-          fontWeight: FontWeight.bold,
-        ),
+      title: Column(
+        children: [
+          CoreText.headlineMedium(LocalizationKey.myProfile.value),
+          verticalBox4,
+          Divider(),
+        ],
       ),
     );
   }
@@ -62,24 +63,47 @@ final class _Body extends StatelessWidget {
   const _Body();
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Stack(
+      children: [
+        Padding(
+          padding: AppConstants.paddingConstants.pagePadding,
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  _UserInfoField(),
+                  verticalBox20,
+                  _ThemeChangeField(),
+                ],
+              ),
+              Expanded(child: emptyBox),
+            ],
+          ),
+        ),
+        _LogOutButton(),
+      ],
+    );
+  }
+}
+
+@immutable
+final class _LogOutButton extends StatelessWidget {
+  const _LogOutButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 20,
+      left: 0,
+      right: 0,
       child: Padding(
-        padding: AppConstants.paddingConstants.pagePadding,
-        child: Column(
-          children: [
-            Divider(),
-            verticalBox16,
-            _UserInfoField(),
-            verticalBox20,
-            _ThemeChangeField(),
-            verticalBox64 + verticalBox64 + verticalBox64,
-            CoreOutlinedButton.autoIndicator(
-                child: Center(child: CoreText.bodyLarge(LocalizationKey.logout.value)),
-                onPressed: () async {
-                  final isLogOut = await SCDialogs.showLogoutDialog(context: context);
-                  if (isLogOut ?? false) context.read<ProfileBloc>().add(ProfileLogOutEvent());
-                }),
-          ],
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: CoreOutlinedButton.autoIndicator(
+          child: Center(child: CoreText.bodyLarge(LocalizationKey.logout.value)),
+          onPressed: () async {
+            final isLogOut = await SCDialogs.showLogoutDialog(context: context);
+            if (isLogOut ?? false) context.read<ProfileBloc>().add(ProfileLogOutEvent());
+          },
         ),
       ),
     );
@@ -92,6 +116,8 @@ final class _UserInfoField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<ProfileBloc>();
+    final user = bloc.state.user;
     return Container(
       width: double.infinity,
       height: context.height * 0.15,
@@ -99,21 +125,18 @@ final class _UserInfoField extends StatelessWidget {
         color: context.colorScheme.primary.withOpacity(0.4),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Padding(
-        padding: AppConstants.paddingConstants.pagePadding,
+      child: Center(
         child: ListTile(
           leading: CircleAvatar(
             radius: 30,
             backgroundColor: context.colorScheme.primary,
             child: CoreText.headlineMedium(
-              LocalizationKey.name.value[0],
+              (user?.name?.characters.first.toUpperCase() ?? '') + (user?.surName?.characters.first.toUpperCase() ?? ''),
               textColor: context.colorScheme.onPrimary,
             ),
           ),
-          title: CoreText.titleLarge("Betül Anaçoğlu"),
-          subtitle: CoreText.bodyMedium(
-            LocalizationKey.email.value,
-          ),
+          title: CoreText.titleLarge((user?.name ?? '') + ' ' + (user?.surName ?? '')),
+          subtitle: CoreText.bodyMedium(user?.email ?? ''),
         ),
       ),
     );
@@ -127,7 +150,7 @@ final class _ThemeChangeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
+      height: context.height * 0.3,
       child: ListView.separated(
         itemBuilder: (context, index) {
           final colorScheme = context.watch<ProfileBloc>().state.colorSchemes[index];

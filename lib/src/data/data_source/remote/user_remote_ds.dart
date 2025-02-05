@@ -30,11 +30,8 @@ final class UserRemoteDS implements IUserRemoteDS {
         userName: 'admin',
         name: 'admin name',
         surName: 'admin surname',
-        title: 'admin title',
         email: 'admin@corewish.com',
         phone: '',
-        isActive: true,
-        language: 'en-US',
         password: "asdasdasdadasda"
       ),
       succeeded: true,

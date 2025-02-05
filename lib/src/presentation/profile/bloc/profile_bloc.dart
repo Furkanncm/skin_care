@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_clean_architecture/src/common/extensions/future_extension.dart';
 import 'package:bloc_clean_architecture/src/common/network_manager/future_base_response_extension.dart';
+import 'package:bloc_clean_architecture/src/data/model/my_user/my_user.dart';
 import 'package:bloc_clean_architecture/src/domain/auth/auth_repository.dart';
 import 'package:bloc_clean_architecture/src/domain/user/user_repository.dart';
 import 'package:bloc_clean_architecture/src/presentation/shared_blocs/auth/bloc/auth_bloc.dart';
@@ -35,13 +36,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ThemeRepository _themeRepository;
   final LocalizationRepository _localizationRepository;
 
+
   Future<void> _profileEventInitialize(ProfileEventInitialize event, Emitter<ProfileState> emit) async {
+    final user = await _userRepository.getLocalUser();
     final colorSchemes = await _themeRepository.getColorSchemes();
     final result = await _localizationRepository.getCultures().intercept();
     final cultures = result.data ?? <Culture>[];
     final selectedCulture = _localizationRepository.getSelectedCulture();
     if (selectedCulture.isNull) throw Exception('Selected culture is null');
-    emit(state.copyWith(status: ProfileStatus.loaded, colorSchemes: colorSchemes, cultures: cultures, selectedCulture: selectedCulture));
+    emit(state.copyWith(status: ProfileStatus.loaded, colorSchemes: colorSchemes, cultures: cultures, selectedCulture: selectedCulture, user: user));
   }
 
   Future<void> _profileLogOutEvent(ProfileLogOutEvent event, Emitter<ProfileState> emit) async {

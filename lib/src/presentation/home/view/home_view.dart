@@ -22,6 +22,7 @@ final class HomeView extends StatelessWidget {
             if (state.status == HomeStatus.loading) {
               return AdaptiveIndicator();
             } else {
+              final username = state.user?.name ?? '';
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -29,10 +30,13 @@ final class HomeView extends StatelessWidget {
                   verticalBox4,
                   Padding(
                     padding: AppConstants.paddingConstants.pageLowPadding,
-                    child: CoreText.bodyLarge((state.user?.name?.toUpperCase() ?? "") + LocalizationKey.sloganWithUserName.value),
+                    child: CoreText.bodyLarge((username.characters.first.toUpperCase() + username.substring(1)) + LocalizationKey.sloganWithUserName.value),
                   ),
+                  Divider(indent: context.width * 0.05, endIndent: context.width * 0.05),
+                  verticalBox12,
                   Expanded(
                     child: GridView.builder(
+                      padding: EdgeInsets.zero,
                       itemCount: 10,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

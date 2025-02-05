@@ -41,6 +41,7 @@ final class PaddingConstants {
   EdgeInsetsGeometry get pagePadding => const EdgeInsets.symmetric(horizontal: 23, vertical: 12);
     EdgeInsetsGeometry get pageLowPadding => const EdgeInsets.symmetric(horizontal: 15, vertical: 8);
   EdgeInsetsGeometry get horizontalPadding => const EdgeInsets.symmetric(horizontal: 8);
+    EdgeInsetsGeometry get verticalPadding => const EdgeInsets.symmetric(vertical: 10);
 }
 
 @immutable

@@ -8,18 +8,15 @@ part 'my_user.g.dart';
 @immutable
 @JsonSerializable()
 final class MyUser extends BaseModel<MyUser> with EquatableMixin {
-  MyUser({this.userName, this.id, this.name, this.surName, this.title, this.email, this.phone, this.isActive, this.language, this.password});
+  MyUser({this.userName, this.id, this.name, this.surName,  this.email, this.phone,  this.password});
 
   const MyUser.notValid()
       : userName = null,
         id = null,
         name = null,
         surName = null,
-        title = null,
         email = null,
         phone = null,
-        isActive = null,
-        language = null,
         password = null;
 
   factory MyUser.fromJson(Map<String, dynamic> json) => _$MyUserFromJson(json);
@@ -28,11 +25,8 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
   final String? id;
   final String? name;
   final String? surName;
-  final String? title;
   final String? email;
   final String? phone;
-  final bool? isActive;
-  final String? language;
   final String? password;
 
   @override
@@ -46,11 +40,8 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
       userName: data['userName'] as String?,
       name: data['name'] as String?,
       surName: data['surName'] as String?,
-      title: data['title'] as String?,
       email: data['email'] as String?,
       phone: data['phone'] as String?,
-      isActive: data['isActive'] as bool?,
-      language: data['language'] as String?,
       password: data['password'] as String?,
     );
   }
@@ -64,11 +55,8 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
         id,
         name,
         surName,
-        title,
         email,
         phone,
-        isActive,
-        language,
         password,
       ];
 
@@ -89,11 +77,8 @@ final class MyUser extends BaseModel<MyUser> with EquatableMixin {
       id: id ?? this.id,
       name: name ?? this.name,
       surName: surName ?? this.surName,
-      title: title ?? this.title,
       email: email ?? this.email,
       phone: phone ?? this.phone,
-      isActive: isActive ?? this.isActive,
-      language: language ?? this.language,
       password: password??this.password
     );
   }

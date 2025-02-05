@@ -54,7 +54,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (!(doc.exists)) return;
       final user = MyUser.fromMap(doc.id, doc.data() as Map<String, dynamic>);
       _authRepository.setUserCredentials(myUserCredentials: myUserCredential);
-      _userRepository.setLocalUser(user: MyUser(name: user.name, email: email, password: password));
+      _userRepository.setLocalUser(user: MyUser(name: user.name, surName: user.surName, email: email, password: password, id: user.id));
       _authRepository.changeAuthState(authState: AuthState.authenticated());
       SCToasts.showSuccessToast(message: LocalizationKey.sloganForLogin.value);
       router.pushReplacementNamed(RoutePaths.home.name);

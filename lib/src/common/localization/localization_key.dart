@@ -28,7 +28,7 @@ enum LocalizationKey {
   forgotPassword('Forgot Password?'), // Şifremi Unuttum
   email('Email'), // E-posta
   sendCode('SendCode'), // Kod Gönder
-  myProfile('My Profile'), // Profilim
+  myProfile('Profile'), // Profilim
   save('Save'), // Kaydet
   dataCouldNotBeFetched('DataCouldNotBeFetched'), // Veri alınamadı
   regenerationTime('RegenerationTime'), // Yeniden oluşturma süresi
@@ -88,6 +88,7 @@ enum LocalizationKey {
   sloganWithUserName(", your skin deserves the best! ✨🌿 Create your perfect skincare routine today!"),
   sloganForLogin("Radiant skin, confident you! 🌸✨ Start your skincare journey today!"),
   accountCreatedSuccess("Your account has been created successfully."),
+  addCosmetics("Add Cosmetics"),
   ;
 
   const LocalizationKey(this.value);

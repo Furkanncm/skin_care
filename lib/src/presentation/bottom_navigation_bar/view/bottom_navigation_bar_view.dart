@@ -22,17 +22,17 @@ class BottomNavigationBarView extends StatelessWidget {
           );
         },
         items: [
-          /// Home
+          /// Routine
           SalomonBottomBarItem(
             icon: Icon(Icons.home),
             title: CoreText.bodyMedium(LocalizationKey.routines.value),
             selectedColor: Colors.blue,
           ),
 
-          /// Likes
+          /// AddCosmetic
           SalomonBottomBarItem(
-            icon: Icon(Icons.favorite_border),
-            title: Text("Likes"),
+            icon: Icon(Icons.add_circle_outline_outlined),
+            title: CoreText.bodyMedium(LocalizationKey.addCosmetics.value),
             selectedColor: Colors.pink,
           ),
 
