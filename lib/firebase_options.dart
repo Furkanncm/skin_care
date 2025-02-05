@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'skincareappforbetul.firebasestorage.app',
   );
 
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA_Q9rYsOP7uwQ_OQAaA1PcBHJ56ZYBDhw',
     appId: '1:872023771713:android:f5bae19443535b487314c0',
