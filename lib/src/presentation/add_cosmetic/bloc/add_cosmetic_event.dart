@@ -11,10 +11,14 @@ final class AddCosmeticInitializedEvent extends AddCosmeticEvent {
   const AddCosmeticInitializedEvent();
 }
 
-final class LanguageChangedEvent extends AddCosmeticEvent {
-  const LanguageChangedEvent({required this.culture});
-  final Culture culture;
+final class AddCosmeticSelectCategoryEvent extends AddCosmeticEvent {
+  AddCosmeticSelectCategoryEvent({required this.selectedCategory});
 
-  @override
-  List<Object> get props => [culture];
+  final SkinCareCategory selectedCategory;
+}
+
+final class AddCosmeticSelectColorEvent extends AddCosmeticEvent {
+  AddCosmeticSelectColorEvent({required this.selectedColor});
+
+  final ColorCategory selectedColor;
 }

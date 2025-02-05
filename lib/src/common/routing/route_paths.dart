@@ -9,6 +9,7 @@ enum RoutePaths {
   post('post'),
   comment('comment'),
   addCosmetics('/addCosmetics'),
+  addPlans('/addPlans'),
   localization('localization'),
   profile('/profile'),
   profileEdit('profileEdit');

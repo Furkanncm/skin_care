@@ -1,14 +1,13 @@
 import 'package:bloc_clean_architecture/src/common/functions/my_functions.dart';
 import 'package:bloc_clean_architecture/src/common/routing/route_paths.dart';
+import 'package:bloc_clean_architecture/src/presentation/add_cosmetic/view/add_cosmetic_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/bottom_navigation_bar/view/bottom_navigation_bar_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/home/view/home_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/login/view/login_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/profile/view/profile_view.dart';
-import 'package:bloc_clean_architecture/src/presentation/add_cosmetic/view/add_cosmetic.dart';
 import 'package:bloc_clean_architecture/src/presentation/shared_blocs/auth/bloc/auth_bloc.dart';
 import 'package:bloc_clean_architecture/src/presentation/sign_up/view/sign_up_view.dart';
 import 'package:bloc_clean_architecture/src/presentation/splash/view/splash_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_core/flutter_core.dart';
@@ -18,6 +17,7 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 final sectionHomeNavigatorKey = GlobalKey<NavigatorState>();
 final sectionCosmeticsNavigatorKey = GlobalKey<NavigatorState>();
 final sectionProfileNavigatorKey = GlobalKey<NavigatorState>();
+final sectionPlansNavigatorKey = GlobalKey<NavigatorState>();
 final popupManager = PopupManager(navigatorKey: rootNavigatorKey);
 final overlayManager = OverlayManager(navigatorKey: rootNavigatorKey);
 
@@ -80,6 +80,21 @@ GoRouter router = GoRouter(
               path: RoutePaths.addCosmetics.asRoutePath,
               name: RoutePaths.addCosmetics.name,
               builder: (context, state) => const AddCosmeticView(),
+            ),
+          ],
+        ),
+
+        /// Add Plans branch
+        StatefulShellBranch(
+          navigatorKey: sectionPlansNavigatorKey,
+          routes: [
+            /// Add Cosmetics route
+            GoRoute(
+              path: RoutePaths.addPlans.asRoutePath,
+              name: RoutePaths.addPlans.name,
+              builder: (context, state) => Container(
+                color: Colors.red,
+              ),
             ),
           ],
         ),

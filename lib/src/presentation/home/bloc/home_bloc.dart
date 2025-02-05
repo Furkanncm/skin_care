@@ -27,17 +27,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final UserRepository _userRepository;
   Future<void> _initialize(HomeEvent event, Emitter<HomeState> emit) async {
  
-// await FirebaseFirestore.instance
-//       .collection('users')
-//       .doc("1")
-//       .collection('cosmetics')
-//       .add({
-//     'name': "C vitamini",
-//     'brand': "korendy",
-//     'category': "Vitamin",
-//     'description': "Sadece sabahları tonik sonrası ilk kullanılır",
 
-//   });
 
 //    await FirebaseFirestore.instance
 //       .collection('users')
@@ -47,7 +37,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 //       .set({
 //     'morning': FieldValue.arrayUnion([1])
 //   }, SetOptions(merge: true));
+
     final user = _userRepository.getLocalUser();
+
+  //   await FirebaseFirestore.instance
+  //     .collection(FirestoreCollection.users.value)
+  //     .doc(user?.id??"")
+  //     .collection(FirestoreCollection.cosmetics.value)
+  //     .add({
+  //   'name': "C vitamini",
+  //   'brand': "korendy",
+  //   'category': "Vitamin",
+  //   'description': "Sadece sabahları tonik sonrası ilk kullanılır",
+
+  // });
     if (user == null) return;
     emit(state.copyWith(user: user));
     await 300.milliseconds.delay<void>();

@@ -29,11 +29,18 @@ class BottomNavigationBarView extends StatelessWidget {
             selectedColor: Colors.blue,
           ),
 
-          /// AddCosmetic
+          /// Add Cosmetic
           SalomonBottomBarItem(
             icon: Icon(Icons.add_circle_outline_outlined),
-            title: CoreText.bodyMedium(LocalizationKey.addCosmetics.value),
+            title: CoreText.bodyMedium(LocalizationKey.cosmetics.value),
             selectedColor: Colors.pink,
+          ),
+
+          /// Add Plans
+          SalomonBottomBarItem(
+            icon: Icon(Icons.calendar_today_outlined),
+            title: CoreText.bodyMedium(LocalizationKey.plans.value),
+            selectedColor: Colors.orange,
           ),
 
           /// Profile

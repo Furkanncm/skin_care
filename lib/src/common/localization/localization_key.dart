@@ -88,7 +88,17 @@ enum LocalizationKey {
   sloganWithUserName(", your skin deserves the best! ✨🌿 Create your perfect skincare routine today!"),
   sloganForLogin("Radiant skin, confident you! 🌸✨ Start your skincare journey today!"),
   accountCreatedSuccess("Your account has been created successfully."),
-  addCosmetics("Add Cosmetics"),
+  cosmetics("Cosmetics"),
+  addNewProduct("Add New Product"),
+  plans("Plans"),
+  addPhoto("Add Photo"),
+  description("Description"),
+  descriptionForCosmetic("You can add your cosmetic products to your list by entering the information below."),
+  category("Category"),
+  chooseCategory("Choose Category"),
+  color("Color"), 
+  pickColor("Pick Color"),
+  suggestionFieldToBeCorrected("Please correct the fields below."),
   ;
 
   const LocalizationKey(this.value);
