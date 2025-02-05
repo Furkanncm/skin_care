@@ -60,16 +60,16 @@ import 'package:bloc_clean_architecture/src/domain/todo/todo_repository.dart'
     as _i356;
 import 'package:bloc_clean_architecture/src/domain/user/user_repository.dart'
     as _i85;
+import 'package:bloc_clean_architecture/src/presentation/add_cosmetic/bloc/add_cosmetic_bloc.dart'
+    as _i965;
 import 'package:bloc_clean_architecture/src/presentation/home/bloc/home_bloc.dart'
     as _i827;
 import 'package:bloc_clean_architecture/src/presentation/login/bloc/login_bloc.dart'
     as _i456;
-import 'package:bloc_clean_architecture/src/presentation/profile/cubit/profile_cubit.dart'
-    as _i486;
+import 'package:bloc_clean_architecture/src/presentation/profile/bloc/profile_bloc.dart'
+    as _i199;
 import 'package:bloc_clean_architecture/src/presentation/service_unavailable/bloc/service_unavailable_bloc.dart'
     as _i86;
-import 'package:bloc_clean_architecture/src/presentation/settings/bloc/settings_bloc.dart'
-    as _i486;
 import 'package:bloc_clean_architecture/src/presentation/shared_blocs/auth/bloc/auth_bloc.dart'
     as _i369;
 import 'package:bloc_clean_architecture/src/presentation/shared_blocs/network_manager/bloc/manager/network_manager_bloc.dart'
@@ -168,20 +168,22 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i291.AuthRepository>(),
           gh<_i85.UserRepository>(),
         ));
-    gh.factory<_i486.ProfileCubit>(() => _i486.ProfileCubit(
-          gh<_i291.AuthRepository>(),
-          gh<_i85.UserRepository>(),
-        ));
     gh.factory<_i378.SignUpBloc>(() => _i378.SignUpBloc(
           gh<_i291.AuthRepository>(),
           gh<_i85.UserRepository>(),
         ));
-    gh.factory<_i486.SettingsBloc>(() => _i486.SettingsBloc(
+    gh.factory<_i965.AddCosmeticBloc>(() => _i965.AddCosmeticBloc(
           gh<_i626.ThemeRepository>(),
           gh<_i749.LocalizationRepository>(),
         ));
     gh.lazySingleton<_i356.TodoRepository>(
         () => _i356.TodoRepository(gh<_i283.TodoLocalDS>()));
+    gh.factory<_i199.ProfileBloc>(() => _i199.ProfileBloc(
+          gh<_i291.AuthRepository>(),
+          gh<_i85.UserRepository>(),
+          gh<_i626.ThemeRepository>(),
+          gh<_i749.LocalizationRepository>(),
+        ));
     gh.factory<_i982.TodoBloc>(
         () => _i982.TodoBloc(gh<_i356.TodoRepository>()));
     return this;

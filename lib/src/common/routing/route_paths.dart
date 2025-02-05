@@ -8,7 +8,7 @@ enum RoutePaths {
   todo('todo'),
   post('post'),
   comment('comment'),
-  settings('/settings'),
+  addCosmetics('/addCosmetics'),
   localization('localization'),
   profile('/profile'),
   profileEdit('profileEdit');

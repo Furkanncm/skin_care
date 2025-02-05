@@ -1,4 +1,6 @@
+import 'package:bloc_clean_architecture/src/common/localization/localization_key.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_core/flutter_core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -23,7 +25,7 @@ class BottomNavigationBarView extends StatelessWidget {
           /// Home
           SalomonBottomBarItem(
             icon: Icon(Icons.home),
-            title: Text("Home"),
+            title: CoreText.bodyMedium(LocalizationKey.routines.value),
             selectedColor: Colors.blue,
           ),
 
@@ -34,44 +36,14 @@ class BottomNavigationBarView extends StatelessWidget {
             selectedColor: Colors.pink,
           ),
 
-          /// Search
-          SalomonBottomBarItem(
-            icon: Icon(Icons.search),
-            title: Text("Search"),
-            selectedColor: Colors.orange,
-          ),
-
           /// Profile
           SalomonBottomBarItem(
             icon: Icon(Icons.person),
-            title: Text("Profile"),
+            title: CoreText.bodyMedium(LocalizationKey.myProfile.value),
             selectedColor: Colors.teal,
           ),
         ],
       ),
-      // bottomNavigationBar: NavigationBar(
-      //   destinations: [
-      //     NavigationDestination(
-      //       icon: const Icon(Icons.home),
-      //       label: LocalizationKey.homePage.tr(context),
-      //     ),
-      //     NavigationDestination(
-      //       icon: const Icon(Icons.settings),
-      //       label: LocalizationKey.settings.tr(context),
-      //     ),
-      //     NavigationDestination(
-      //       icon: const Icon(Icons.person),
-      //       label: LocalizationKey.myProfile.tr(context),
-      //     ),
-      //   ],
-      //   selectedIndex: navigationShell.currentIndex,
-      //   onDestinationSelected: (index) {
-      //     navigationShell.goBranch(
-      //       index,
-      //       initialLocation: index == navigationShell.currentIndex,
-      //     );
-      //   },
-      // ),
     );
   }
 }

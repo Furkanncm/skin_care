@@ -7,14 +7,14 @@ import 'package:bloc_clean_architecture/src/common/localization/localization_key
 import 'package:bloc_clean_architecture/src/common/theme/bloc/theme_bloc.dart';
 import 'package:bloc_clean_architecture/src/data/model/color_scheme/dto/color_scheme_dto.dart';
 import 'package:bloc_clean_architecture/src/data/model/localization/response/culture.dart';
-import 'package:bloc_clean_architecture/src/presentation/settings/bloc/settings_bloc.dart';
+import 'package:bloc_clean_architecture/src/presentation/add_cosmetic/bloc/add_cosmetic_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_core/flutter_core.dart';
 
 @immutable
-final class SettingsView extends StatelessWidget {
-  const SettingsView({super.key});
+final class AddCosmeticView extends StatelessWidget {
+  const AddCosmeticView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +25,10 @@ final class SettingsView extends StatelessWidget {
         ),
       ),
       body: BlocProvider(
-        create: (context) => getIt<SettingsBloc>()..add(const SettingsInitializedEvent()),
-        child: BlocBuilder<SettingsBloc, SettingsState>(
+        create: (context) => getIt<AddCosmeticBloc>()..add(const AddCosmeticInitializedEvent()),
+        child: BlocBuilder<AddCosmeticBloc, AddCosmeticState>(
           builder: (context, state) {
-            if (state.status == SettingsStatus.loading) {
+            if (state.status == AddCosmeticStatus.loading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -60,7 +60,7 @@ final class _ThemeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorSchemes = context.watch<SettingsBloc>().state.colorSchemes;
+    final colorSchemes = context.watch<AddCosmeticBloc>().state.colorSchemes;
     return SizedBox(
       height: 120,
       child: ListView.separated(
@@ -109,7 +109,7 @@ final class _CultureList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cultures = context.watch<SettingsBloc>().state.cultures;
+    final cultures = context.watch<AddCosmeticBloc>().state.cultures;
     return SizedBox(
       height: 120,
       child: ListView.separated(
@@ -133,13 +133,13 @@ final class _CultureListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isSelectedCulture = context.watch<SettingsBloc>().state.selectedCulture == culture;
+    final isSelectedCulture = context.watch<AddCosmeticBloc>().state.selectedCulture == culture;
     return ListTile(
       leading: isSelectedCulture ? const Icon(Icons.check) : null,
       title: Text(culture.description ?? ''),
       enabled: !isSelectedCulture,
       onTap: () {
-        context.read<SettingsBloc>().add(LanguageChangedEvent(culture: culture));
+        context.read<AddCosmeticBloc>().add(LanguageChangedEvent(culture: culture));
       },
     );
   }

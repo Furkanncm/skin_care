@@ -8,29 +8,29 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_core/flutter_core.dart';
 import 'package:injectable/injectable.dart';
 
-part 'settings_event.dart';
-part 'settings_state.dart';
+part 'add_cosmetic_event.dart';
+part 'add_cosmetic_state.dart';
 
 @injectable
-class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
-  SettingsBloc(this._themeRepository, this._localizationRepository) : super(const SettingsState()) {
-    on<SettingsInitializedEvent>(_onInitialized);
+class AddCosmeticBloc extends Bloc<AddCosmeticEvent, AddCosmeticState> {
+  AddCosmeticBloc(this._themeRepository, this._localizationRepository) : super(const AddCosmeticState()) {
+    on<AddCosmeticInitializedEvent>(_onInitialized);
     on<LanguageChangedEvent>(_onLanguageChanged);
   }
 
   final ThemeRepository _themeRepository;
   final LocalizationRepository _localizationRepository;
 
-  Future<void> _onInitialized(SettingsInitializedEvent event, Emitter<SettingsState> emit) async {
+  Future<void> _onInitialized(AddCosmeticInitializedEvent event, Emitter<AddCosmeticState> emit) async {
     final colorSchemes = await _themeRepository.getColorSchemes();
     final result = await _localizationRepository.getCultures().intercept();
     final cultures = result.data ?? <Culture>[];
     final selectedCulture = _localizationRepository.getSelectedCulture();
     if (selectedCulture.isNull) throw Exception('Selected culture is null');
-    emit(state.copyWith(status: SettingsStatus.loaded, colorSchemes: colorSchemes, cultures: cultures, selectedCulture: selectedCulture));
+    emit(state.copyWith(status: AddCosmeticStatus.loaded, colorSchemes: colorSchemes, cultures: cultures, selectedCulture: selectedCulture));
   }
 
-  Future<void> _onLanguageChanged(LanguageChangedEvent event, Emitter<SettingsState> emit) async {
+  Future<void> _onLanguageChanged(LanguageChangedEvent event, Emitter<AddCosmeticState> emit) async {
     await _localizationRepository.changeCulture(event.culture);
 
     emit(state.copyWith(selectedCulture: event.culture));

@@ -3,7 +3,7 @@ import 'package:bloc_clean_architecture/src/common/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core/flutter_core.dart';
 
-abstract class MyDialogs {
+abstract class SCDialogs {
   static Future<void> showDeletionConfirmationDialog({required VoidCallback onDelete, required BuildContext context}) {
     final id = UniqueKey().toString();
 
@@ -40,8 +40,8 @@ abstract class MyDialogs {
     return popupManager.showDefaultAdaptiveAlertDialog<bool>(
       id: id,
       context: context,
-      title: Text(LocalizationKey.logout.tr(context, listen: false)),
-      content: Text(LocalizationKey.logoutConfirmation.tr(context, listen: false)),
+      title: CoreText.bodyLarge(LocalizationKey.logout.tr(context, listen: false)),
+      content: CoreText.bodyLarge(LocalizationKey.logoutConfirmation.tr(context, listen: false)),
       onOkButtonPressed: () => popupManager.hidePopup(id: id, result: true),
       isDestuctiveOkButtonIOS: true,
       isDefaultOkButtonIOS: true,

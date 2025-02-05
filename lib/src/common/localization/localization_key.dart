@@ -9,6 +9,7 @@ part 'localization_key_extension.dart';
 enum LocalizationKey {
   login('Login'), // Giriş Yap
   signUp('Sign Up'),
+  routines("Routines"),
   createAccount('Create Account'), // Hesap Oluştur
   alreadyHaveAccount(" Already have an account?"),
   username('Username'), // Kullanıcı Adı
@@ -27,7 +28,7 @@ enum LocalizationKey {
   forgotPassword('Forgot Password?'), // Şifremi Unuttum
   email('Email'), // E-posta
   sendCode('SendCode'), // Kod Gönder
-  myProfile('MyProfile'), // Profilim
+  myProfile('My Profile'), // Profilim
   save('Save'), // Kaydet
   dataCouldNotBeFetched('DataCouldNotBeFetched'), // Veri alınamadı
   regenerationTime('RegenerationTime'), // Yeniden oluşturma süresi
@@ -43,8 +44,8 @@ enum LocalizationKey {
   add('Add'), // Ekle
   changePassword('ChangePassword'), // Şifre Değiştir
   changeLocale('ChangeLocale'), // Dil Değiştir
-  logout('Logout'), // Çıkış Yap
-  logoutConfirmation('LogoutConfirmation'), // Çıkış yapmak istediğinize emin misiniz?
+  logout('Log Out'), // Çıkış Yap
+  logoutConfirmation('Do you want to log out skin care app?'), // Çıkış yapmak istediğinize emin misiniz?
   currentPassword('CurrentPassword'), // Mevcut Şifre
   newPassword('NewPassword'), // Yeni Şifre
   newPasswordAgain('NewPasswordAgain'), // Yeni Şifre Tekrar
@@ -66,8 +67,8 @@ enum LocalizationKey {
   filters('Filters'), // Filtreler
   applyFilter('ApplyFilter'), // Filtreyi Uygula
   changeTheme('ChangeTheme'), // Tema Değiştir
-  light('Light'), // Açık
-  dark('Dark'), // Koyu
+  light('Aydınlık'), // Açık
+  dark('Karanlık'), // Koyu
   error('Error'), // Hata
   ok('Ok'), // Tamam
   newVersionAvailable('NewVersionAvailable'), // Yeni versiyon mevcut

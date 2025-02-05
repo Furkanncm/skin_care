@@ -1,5 +1,5 @@
 import 'package:bloc_clean_architecture/src/common/blocs/indicator/bloc/indicator_bloc.dart';
-import 'package:bloc_clean_architecture/src/common/dialogs/my_dialogs.dart';
+import 'package:bloc_clean_architecture/src/common/dialogs/sc_dialogs.dart';
 import 'package:bloc_clean_architecture/src/common/localization/localization_key.dart';
 import 'package:bloc_clean_architecture/src/common/network_manager/message.dart';
 import 'package:bloc_clean_architecture/src/common/routing/route_paths.dart';
@@ -63,7 +63,7 @@ final class AppEntryMultiBlocListener extends StatelessWidget {
               /* MyToasts.showErrorToast(
                 message: baseResponse.messages!.map((message) => message.content).join('\n'),
               ); */
-              MyDialogs.showErrorMessageDialog(
+              SCDialogs.showErrorMessageDialog(
                 message: baseResponse.messages!.map((message) => message.content).join('\n'),
                 context: context,
               );
@@ -77,7 +77,7 @@ final class AppEntryMultiBlocListener extends StatelessWidget {
           /* MyToasts.showErrorToast(
             message: baseResponse.messages.isNotNull ? baseResponse.messages!.map((message) => message.content).join('\n') : baseResponse.error?.toString() ?? LocalizationKey.unknownErrorOccured.tr(context),
           ); */
-          MyDialogs.showErrorMessageDialog(
+          SCDialogs.showErrorMessageDialog(
             message: baseResponse.messages.isNotNull ? baseResponse.messages!.map((message) => message.content).join('\n') : baseResponse.error?.toString() ?? LocalizationKey.unknownErrorOccured.tr(context),
             context: context,
           );

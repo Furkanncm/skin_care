@@ -1,29 +1,29 @@
-part of 'settings_bloc.dart';
+part of 'add_cosmetic_bloc.dart';
 
-enum SettingsStatus { loading, loaded }
+enum AddCosmeticStatus { loading, loaded }
 
-final class SettingsState extends Equatable {
-  const SettingsState({
-    this.status = SettingsStatus.loading,
+final class AddCosmeticState extends Equatable {
+  const AddCosmeticState({
+    this.status = AddCosmeticStatus.loading,
     this.colorSchemes = const [],
     this.cultures,
     this.selectedCulture,
   });
 
-  final SettingsStatus status;
+  final AddCosmeticStatus status;
   final List<MyColorSchemeDto> colorSchemes;
   final List<Culture>? cultures;
   final Culture? selectedCulture;
   @override
   List<Object?> get props => [status, colorSchemes, cultures, selectedCulture];
 
-  SettingsState copyWith({
-    SettingsStatus? status,
+  AddCosmeticState copyWith({
+    AddCosmeticStatus? status,
     List<MyColorSchemeDto>? colorSchemes,
     List<Culture>? cultures,
     Culture? selectedCulture,
   }) {
-    return SettingsState(
+    return AddCosmeticState(
       status: status ?? this.status,
       colorSchemes: colorSchemes ?? this.colorSchemes,
       selectedCulture: selectedCulture ?? this.selectedCulture,
