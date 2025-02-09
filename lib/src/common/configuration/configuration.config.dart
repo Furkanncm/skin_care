@@ -28,8 +28,6 @@ import 'package:bloc_clean_architecture/src/data/data_source/local/localization/
     as _i807;
 import 'package:bloc_clean_architecture/src/data/data_source/local/theme/theme_local_ds.dart'
     as _i91;
-import 'package:bloc_clean_architecture/src/data/data_source/local/todo_local_ds.dart'
-    as _i283;
 import 'package:bloc_clean_architecture/src/data/data_source/local/user_local_ds.dart'
     as _i493;
 import 'package:bloc_clean_architecture/src/data/data_source/remote/auth_remote_ds.dart'
@@ -56,8 +54,6 @@ import 'package:bloc_clean_architecture/src/domain/sqflite_manager/sqflite_manag
     as _i316;
 import 'package:bloc_clean_architecture/src/domain/theme/theme_repository.dart'
     as _i626;
-import 'package:bloc_clean_architecture/src/domain/todo/todo_repository.dart'
-    as _i356;
 import 'package:bloc_clean_architecture/src/domain/user/user_repository.dart'
     as _i85;
 import 'package:bloc_clean_architecture/src/presentation/add_cosmetic/bloc/add_cosmetic_bloc.dart'
@@ -80,10 +76,6 @@ import 'package:bloc_clean_architecture/src/presentation/sign_up/bloc/sign_up_bl
     as _i378;
 import 'package:bloc_clean_architecture/src/presentation/splash/bloc/splash_bloc.dart'
     as _i982;
-import 'package:bloc_clean_architecture/src/presentation/todo/bloc/todo_bloc.dart'
-    as _i982;
-import 'package:bloc_clean_architecture/src/presentation/todo/cubit/counter_cubit.dart'
-    as _i240;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -99,7 +91,6 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.factory<_i982.SplashBloc>(() => _i982.SplashBloc());
-    gh.factory<_i240.CounterCubit>(() => _i240.CounterCubit());
     gh.singleton<_i308.SqfliteManager>(() => _i308.SqfliteManager());
     gh.lazySingleton<_i890.NetworkManager>(() => _i890.NetworkManager());
     gh.lazySingleton<_i152.SharedPreferencesManager>(
@@ -142,8 +133,6 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i807.LocalizationLocalDS>(),
               gh<_i230.LocalizationRemoteDS>(),
             ));
-    gh.lazySingleton<_i283.TodoLocalDS>(
-        () => _i283.TodoLocalDS(gh<_i308.SqfliteManager>()));
     gh.singleton<_i913.LocalizationBloc>(
         () => _i913.LocalizationBloc(gh<_i749.LocalizationRepository>()));
     gh.lazySingleton<_i257.IndicatorBloc>(
@@ -174,16 +163,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i291.AuthRepository>(),
           gh<_i85.UserRepository>(),
         ));
-    gh.lazySingleton<_i356.TodoRepository>(
-        () => _i356.TodoRepository(gh<_i283.TodoLocalDS>()));
     gh.factory<_i199.ProfileBloc>(() => _i199.ProfileBloc(
           gh<_i291.AuthRepository>(),
           gh<_i85.UserRepository>(),
           gh<_i626.ThemeRepository>(),
           gh<_i749.LocalizationRepository>(),
         ));
-    gh.factory<_i982.TodoBloc>(
-        () => _i982.TodoBloc(gh<_i356.TodoRepository>()));
     return this;
   }
 }
