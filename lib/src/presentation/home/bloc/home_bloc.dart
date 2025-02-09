@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_core/flutter_core.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../data/model/cosmetic/cosmetic.dart';
 import '../../../data/model/my_user/my_user.dart';
 import '../../../domain/auth/auth_repository.dart';
 import '../../../domain/user/user_repository.dart';
@@ -40,17 +41,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     final user = _userRepository.getLocalUser();
 
-  //   await FirebaseFirestore.instance
-  //     .collection(FirestoreCollection.users.value)
-  //     .doc(user?.id??"")
-  //     .collection(FirestoreCollection.cosmetics.value)
-  //     .add({
-  //   'name': "C vitamini",
-  //   'brand': "korendy",
-  //   'category': "Vitamin",
-  //   'description': "Sadece sabahları tonik sonrası ilk kullanılır",
-
-  // });
+  
     if (user == null) return;
     emit(state.copyWith(user: user));
     await 300.milliseconds.delay<void>();

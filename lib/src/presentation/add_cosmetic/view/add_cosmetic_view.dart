@@ -1,5 +1,6 @@
 import 'package:bloc_clean_architecture/src/common/configuration/configuration.dart';
 import 'package:bloc_clean_architecture/src/common/constants/app_contants.dart';
+import 'package:bloc_clean_architecture/src/common/dialogs/sc_dialogs.dart';
 import 'package:bloc_clean_architecture/src/common/localization/localization_key.dart';
 import 'package:bloc_clean_architecture/src/common/widgets/adaptive_indicator/adaptive_indicator.dart';
 import 'package:bloc_clean_architecture/src/data/model/color_category/color_category.dart';
@@ -97,24 +98,31 @@ final class _PhotoCard extends StatelessWidget {
       onTap: () => SCBottomSheets.showImagePickerBottomSheet(context: context, bloc: bloc),
       child: Card(
         elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Container(
           width: double.infinity,
-          height: context.width * 0.5,
+          height: 180,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: Colors.grey.shade100,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              bloc.state.image != null ? Image.file(bloc.state.image!, width: context.width * 0.3, height: context.width * 0.3, fit: BoxFit.cover) : Icon(Icons.photo_album_outlined, size: context.width * 0.2, color: Colors.grey.shade700),
-              verticalBox8,
-              bloc.state.image != null ? emptyBox : CoreText.bodySmall(LocalizationKey.addPhoto.value),
-            ],
-          ),
+          child: bloc.state.image != null
+              ? Padding(
+                  padding: AppConstants.paddingConstants.pagePadding,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.file(
+                      bloc.state.image!,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.photo_album_outlined, size: 100, color: Colors.grey);
+                      },
+                    ),
+                  ),
+                )
+              : const Icon(Icons.photo_album_outlined, size: 60, color: Colors.grey),
         ),
       ),
     );
@@ -134,7 +142,7 @@ final class _NameField extends StatelessWidget {
         verticalBox8,
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) => value!.isEmpty ? LocalizationKey.cantEmptyName.value : null,
+          validator: (value) => (value?.isEmpty ?? true) ? LocalizationKey.cantEmptyName.value : null,
           controller: context.read<AddCosmeticBloc>().nameController,
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.label_outline),
@@ -161,11 +169,7 @@ final class _CategoryField extends StatelessWidget {
         verticalBox8,
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) {
-            return context.watch<AddCosmeticBloc>().state.selectedCategory == null
-                ? LocalizationKey.chooseCategory.value // Kategori seçilmemişse hata göster
-                : null;
-          },
+          validator: (value) => bloc.state.selectedCategory == null ? LocalizationKey.chooseCategory.value : null,
           controller: bloc.categoryController,
           onTap: () async {
             final selectedCategory = await SCBottomSheets.showSingleSelectBottomSheet<SkinCareCategory>(
@@ -197,33 +201,49 @@ final class _ColorField extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.watch<AddCosmeticBloc>();
     final selectedColor = bloc.state.selectedColor;
-    final colorSheme = context.colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CoreText.bodyMedium(LocalizationKey.color.value),
         verticalBox8,
-        TextFormField(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) => value!.isEmpty ? LocalizationKey.cantEmptyColor.value : null,
-          controller: bloc.colorController,
+        GestureDetector(
           onTap: () async {
-            final selectedColor = await SCBottomSheets.showSingleSelectBottomSheet<ColorCategory>(
+            final selected = await SCBottomSheets.showSingleSelectBottomSheet<ColorCategory>(
               context: context,
               items: ColorCategory.getColorCategories(),
               selected: bloc.state.selectedColor,
               title: LocalizationKey.pickColor.value,
             );
-            if (selectedColor == null) return;
-            bloc.add(AddCosmeticSelectColorEvent(selectedColor: selectedColor));
+            if (selected == null) return;
+            bloc.add(AddCosmeticSelectColorEvent(selectedColor: selected));
           },
-          readOnly: true,
-          decoration: InputDecoration(
-            fillColor: selectedColor?.name == null ? colorSheme.surface : selectedColor?.hexToColor(selectedColor.hexCode ?? ''),
-            suffixIcon: Icon(Icons.arrow_drop_down),
-            prefixIcon: const Icon(Icons.color_lens_outlined),
-            hintStyle: TextStyle(color: selectedColor?.name == null ? Colors.grey : colorSheme.onSurface),
-            hintText: selectedColor?.name ?? LocalizationKey.pickColor.value,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              color: context.colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: selectedColor?.hexToColor(selectedColor.hexCode ?? '') ?? Colors.grey,
+                      radius: 12,
+                    ),
+                    horizontalBox12,
+                    CoreText.bodyMedium(
+                      selectedColor?.name ?? LocalizationKey.pickColor.value,
+                      textColor: selectedColor != null ? Colors.black : Colors.grey,
+                    ),
+                  ],
+                ),
+                const Icon(Icons.arrow_drop_down),
+              ],
+            ),
           ),
         ),
       ],
@@ -244,7 +264,7 @@ final class _DescriptionField extends StatelessWidget {
         verticalBox8,
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) => value!.isEmpty ? LocalizationKey.cantEmptyDescription.value : null,
+          validator: (value) => (value?.isEmpty ?? true) ? LocalizationKey.cantEmptyDescription.value : null,
           controller: context.read<AddCosmeticBloc>().descriptionController,
           maxLines: 4,
           decoration: InputDecoration(
@@ -264,13 +284,21 @@ final class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<AddCosmeticBloc>();
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
-        onPressed: () => context.read<AddCosmeticBloc>().add(const AddCosmeticSaveButtonPressedEvent()),
-        icon: const Icon(Icons.save),
+        onPressed: () {
+          if (bloc.state.image == null) {
+            SCDialogs.showWarningMessageDialog(context: context, message: LocalizationKey.mustPickAPhoto.value);
+            return;
+          }
+          bloc.add(const AddCosmeticSaveButtonPressedEvent());
+        },
+        icon: Icon(Icons.save, color: context.colorScheme.onPrimary),
         label: CoreText.bodyMedium(LocalizationKey.save.value),
         style: ElevatedButton.styleFrom(
+          backgroundColor: context.colorScheme.primary,
           padding: const EdgeInsets.symmetric(vertical: 14),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),

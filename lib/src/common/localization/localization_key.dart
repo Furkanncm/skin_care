@@ -108,6 +108,10 @@ enum LocalizationKey {
   takePhotoFromCamera("Take Photo From Camera"),
   choosePhotoFromGallery("Choose Photo From Gallery"),
   mustPickAPhoto("You must select a photo"),
+  warning("Warning"),
+  productAddedSuccessfully("Product added successfully"),
+  productCouldNotBeAdded("Product could not be added"),
+  
   ;
 
   const LocalizationKey(this.value);

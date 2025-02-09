@@ -35,6 +35,18 @@ abstract class SCDialogs {
     );
   }
 
+  static Future<void> showWarningMessageDialog({required String message, required BuildContext context}) {
+    final id = UniqueKey().toString();
+
+    return popupManager.showAdaptiveInfoDialog(
+      id: id,
+      context: context,
+      title: CoreText(LocalizationKey.warning.value),
+      content: CoreText(message),
+      okButtonLabel: LocalizationKey.ok.tr(context, listen: false),
+    );
+  }
+
   static Future<bool?> showLogoutDialog({required BuildContext context}) {
     final id = UniqueKey().toString();
     return popupManager.showDefaultAdaptiveAlertDialog<bool>(
