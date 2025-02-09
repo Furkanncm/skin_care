@@ -70,4 +70,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       }
     }
   }
+
+  @override
+  Future<void> close() {
+    nameController.dispose();
+    surnameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    passwordAgainController.dispose();
+    return super.close();
+  }
 }

@@ -7,24 +7,28 @@ final class AddCosmeticState extends Equatable {
     this.status = AddCosmeticStatus.loading,
     this.selectedCategory,
     this.selectedColor,
+    this.image,
   });
 
   final AddCosmeticStatus status;
   final SkinCareCategory? selectedCategory;
   final ColorCategory? selectedColor;
+  final File? image;
 
   @override
-  List<Object?> get props => [status, selectedCategory, selectedColor];
+  List<Object?> get props => [status, selectedCategory, selectedColor , image];
 
   AddCosmeticState copyWith({
     AddCosmeticStatus? status,
     SkinCareCategory? selectedCategory,
     ColorCategory? selectedColor,
+    File? image,
   }) {
     return AddCosmeticState(
       status: status ?? this.status,
       selectedCategory: selectedCategory ?? this.selectedCategory,
       selectedColor: selectedColor ?? this.selectedColor,
+      image: image ?? this.image,
     );
   }
 }

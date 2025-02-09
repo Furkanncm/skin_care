@@ -78,6 +78,12 @@ enum LocalizationKey {
   goNow("Back to Today"),
   inValidEmail("Invalid Email "),
   cantEmptyPassword("Password can not be empty"),
+  cantEmptyEmail("Email can not be empty"),
+  cantEmptyName("Name can not be empty"),
+  cantEmptySurname("Surname can not be empty"),
+  cantEmptyDescription("Description can not be empty"),
+  cantEmptyColor("Color can not be empty"),
+  cantEmptyCategory("Category can not be empty"),
   password6char("Password must be at least 6 characters"),
   passwordbigChar("Password must be at least 1 upper case character"),
   password1number("Password must be at least 1 number "),
@@ -99,6 +105,9 @@ enum LocalizationKey {
   color("Color"), 
   pickColor("Pick Color"),
   suggestionFieldToBeCorrected("Please correct the fields below."),
+  takePhotoFromCamera("Take Photo From Camera"),
+  choosePhotoFromGallery("Choose Photo From Gallery"),
+  mustPickAPhoto("You must select a photo"),
   ;
 
   const LocalizationKey(this.value);

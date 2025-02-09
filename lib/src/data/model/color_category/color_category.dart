@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bloc_clean_architecture/src/common/extensions/string_extension.dart';
 import 'package:flutter_core/flutter_core.dart';
 
@@ -16,6 +18,10 @@ class ColorCategory implements SelectableSearchMixin {
     return ColorCode.values.map((color) => ColorCategory(name: color.name.splitName(), hexCode: color.hexCode)).toList();
   }
 
+Color hexToColor(String hexCode) {
+  hexCode = hexCode.replaceAll("#", ""); // '#' işaretini kaldır
+  return Color(int.parse("0xFF$hexCode")); // 0xFF ekleyerek Color'a çevir
+}
   @override
   bool get active => true;
 

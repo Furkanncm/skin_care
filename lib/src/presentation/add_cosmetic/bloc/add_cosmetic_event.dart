@@ -22,3 +22,14 @@ final class AddCosmeticSelectColorEvent extends AddCosmeticEvent {
 
   final ColorCategory selectedColor;
 }
+
+
+final class AddCosmeticSaveButtonPressedEvent extends AddCosmeticEvent {
+  const AddCosmeticSaveButtonPressedEvent();
+}
+
+final class AddCosmeticPickImageEvent extends AddCosmeticEvent {
+  const AddCosmeticPickImageEvent({required this.source});
+
+  final ImageSource source;
+}
