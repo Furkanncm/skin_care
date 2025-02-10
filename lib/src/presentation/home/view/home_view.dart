@@ -30,7 +30,7 @@ final class HomeView extends StatelessWidget {
                   verticalBox4,
                   Padding(
                     padding: AppConstants.paddingConstants.pageLowPadding,
-                    child: CoreText.bodyLarge((username.characters.first.toUpperCase() + username.substring(1)) + LocalizationKey.sloganWithUserName.value),
+                    child: CoreText.bodyLarge("Hello "+(username.characters.first.toUpperCase() + username.substring(1)) + LocalizationKey.sloganWithUserName.value),
                   ),
                   Divider(indent: context.width * 0.05, endIndent: context.width * 0.05),
                   verticalBox12,

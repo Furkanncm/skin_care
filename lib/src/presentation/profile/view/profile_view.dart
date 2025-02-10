@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc_clean_architecture/src/common/configuration/configuration.dart';
 import 'package:bloc_clean_architecture/src/common/constants/app_contants.dart';
+import 'package:bloc_clean_architecture/src/data/model/my_user/my_user.dart';
 import 'package:bloc_clean_architecture/src/presentation/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,6 @@ import '../../../common/dialogs/sc_dialogs.dart';
 import '../../../common/localization/localization_key.dart';
 import '../../../common/theme/bloc/theme_bloc.dart';
 import '../../../common/widgets/adaptive_indicator/adaptive_indicator.dart';
-import '../../../data/model/color_scheme/dto/color_scheme_dto.dart';
 import 'enum/profil_info_enum.dart';
 
 @immutable
@@ -49,7 +49,7 @@ final class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: context.colorScheme.primary,
       centerTitle: true,
-      title: CoreText.headlineSmall(LocalizationKey.myProfile.tr(context), textColor: context.colorScheme.onPrimary),
+      title: CoreText.headlineMedium(LocalizationKey.myProfile.tr(context), textColor: context.colorScheme.onPrimary),
       actions: [
         IconButton(
           icon: Icon(Icons.logout_outlined, color: context.colorScheme.surface, size: 30),
@@ -71,25 +71,13 @@ final class _Body extends StatelessWidget {
   const _Body();
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<ProfileBloc>();
-    final user = bloc.state.user;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const _UserInfoField(),
         verticalBox12,
+        _UserDetailInfo(),
         _ThemeChangeField(),
-        Padding(
-          padding: AppConstants.paddingConstants.pageLowPadding,
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: ProfilInfoEnum.values.toList().map((e) {
-                return ListTile(
-                  title: CoreText.bodyLarge(e.name.characters.first.toUpperCase() + e.name.substring(1)),
-                  trailing: CoreText.bodyMedium(e.value(user)),
-                );
-              }).toList()),
-        ),
       ],
     );
   }
@@ -115,54 +103,9 @@ final class _UserInfoField extends StatelessWidget {
           children: [
             Row(
               children: [
-                SizedBox(
-                  width: 115,
-                  height: 115,
-                  child: Stack(
-                    children: [
-                      ClipOval(
-                        child: Container(
-                          padding: EdgeInsets.zero,
-                          width: 100,
-                          height: 100,
-                          color: context.colorScheme.surface,
-                          child: Image.file(
-                            File(user?.imagePath ?? ''),
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) => Center(
-                              child: CoreText.displayMedium(user?.name?.characters.first.toUpperCase() ?? ''),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 10,
-                        right: 10,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: context.colorScheme.surface,
-                          ),
-                          child: CoreIconButton(
-                            icon: Icon(Icons.camera_alt_outlined),
-                            onPressed: () => context.read<ProfileBloc>().add(ProfileChangePhotoEvent()),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                _AvatarField(user: user),
                 horizontalBox20,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CoreText.headlineSmall(
-                      (user?.name ?? '').characters.first.toUpperCase() + (user?.name ?? '').substring(1) + ' ' + (user?.surName ?? '').characters.first.toUpperCase() + (user?.surName ?? '').substring(1),
-                      textColor: context.colorScheme.onPrimary,
-                    ),
-                    CoreText.titleSmall(user?.email ?? '', textColor: context.colorScheme.onPrimary),
-                  ],
-                ),
+                _NameAndEmailField(user: user),
               ],
             ),
           ],
@@ -173,52 +116,123 @@ final class _UserInfoField extends StatelessWidget {
 }
 
 @immutable
-final class _ThemeChangeField extends StatelessWidget {
-  const _ThemeChangeField();
+final class _NameAndEmailField extends StatelessWidget {
+  const _NameAndEmailField({
+    required this.user,
+  });
+
+  final MyUser? user;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppConstants.paddingConstants.pageLowPadding,
-      child: SizedBox(
-        height: context.height * 0.15,
-        child: ListView.separated(
-          itemBuilder: (context, index) {
-            final colorScheme = context.watch<ProfileBloc>().state.colorSchemes[index];
-            return _ThemeOptionListTile(colorScheme: colorScheme);
-          },
-          separatorBuilder: (context, index) => const Divider(),
-          itemCount: context.watch<ProfileBloc>().state.colorSchemes.length,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CoreText.headlineSmall(
+          (user?.name ?? '').characters.first.toUpperCase() + (user?.name ?? '').substring(1) + ' ' + (user?.surName ?? '').characters.first.toUpperCase() + (user?.surName ?? '').substring(1),
+          textColor: context.colorScheme.onPrimary,
         ),
+        CoreText.titleSmall(user?.email ?? '', textColor: context.colorScheme.onPrimary),
+      ],
+    );
+  }
+}
+
+@immutable
+final class _AvatarField extends StatelessWidget {
+  const _AvatarField({
+    required this.user,
+  });
+
+  final MyUser? user;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 115,
+      height: 115,
+      child: Stack(
+        children: [
+          ClipOval(
+            child: Container(
+              padding: EdgeInsets.zero,
+              width: 100,
+              height: 100,
+              color: context.colorScheme.surface,
+              child: Image.file(
+                File(user?.imagePath ?? ''),
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Center(
+                  child: CoreText.displayMedium(user?.name?.characters.first.toUpperCase() ?? ''),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 10,
+            right: 10,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: context.colorScheme.surface,
+              ),
+              child: CoreIconButton(
+                icon: Icon(Icons.camera_alt_outlined),
+                onPressed: () => context.read<ProfileBloc>().add(ProfileChangePhotoEvent()),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
 }
 
 @immutable
-final class _ThemeOptionListTile extends StatelessWidget {
-  const _ThemeOptionListTile({
-    required this.colorScheme,
-  });
-
-  final MyColorSchemeDto colorScheme;
+final class _UserDetailInfo extends StatelessWidget {
+  const _UserDetailInfo();
 
   @override
   Widget build(BuildContext context) {
-    final currentColorScheme = context.watch<ThemeBloc>().state.colorScheme;
+    final bloc = context.watch<ProfileBloc>();
+    final user = bloc.state.user;
+    return Padding(
+      padding: AppConstants.paddingConstants.horizontalhighPadding,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: ProfilInfoEnum.values.toList().map((e) {
+            return ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: e.icon(user!),
+              title: CoreText.bodyLarge(e.name.characters.first.toUpperCase() + e.name.substring(1)),
+              trailing: CoreText.bodyMedium(e.value(user)),
+            );
+          }).toList()),
+    );
+  }
+}
 
-    return ListTile(
-      enabled: currentColorScheme != colorScheme,
-      leading: colorScheme.brightness == Brightness.dark
-          ? const Icon(
-              Icons.dark_mode,
-            )
-          : const Icon(
-              Icons.light_mode_outlined,
-            ),
-      title: CoreText.bodyLarge(colorScheme.brightness == Brightness.dark ? LocalizationKey.dark.tr(context) : LocalizationKey.light.tr(context)),
-      trailing: currentColorScheme == colorScheme ? const Icon(Icons.check_circle_outline) : null,
-      onTap: () => context.read<ThemeBloc>().add(ThemeChangedEvent(colorScheme: colorScheme)),
+@immutable
+final class _ThemeChangeField extends StatelessWidget {
+  const _ThemeChangeField();
+
+  @override
+  Widget build(BuildContext context) {
+    final themeBloc = context.watch<ThemeBloc>();
+    final isDarkMode = themeBloc.state.colorScheme?.brightness == Brightness.dark;
+    return Padding(
+      padding: AppConstants.paddingConstants.horizontalhighPadding,
+      child: SwitchListTile.adaptive(
+        contentPadding: EdgeInsets.zero,
+        title: CoreText.bodyLarge(
+          isDarkMode ? LocalizationKey.dark.value : LocalizationKey.light.value,
+        ),
+        secondary: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode_outlined),
+        value: isDarkMode,
+        onChanged: (value) {
+          context.read<ThemeBloc>().add(ThemeChangeButtonClickedEvent());
+        },
+      ),
     );
   }
 }

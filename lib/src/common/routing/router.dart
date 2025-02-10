@@ -13,6 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_core/flutter_core.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../presentation/add_plan/view/add_plan_view.dart';
+
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final sectionHomeNavigatorKey = GlobalKey<NavigatorState>();
 final sectionCosmeticsNavigatorKey = GlobalKey<NavigatorState>();
@@ -92,9 +94,7 @@ GoRouter router = GoRouter(
             GoRoute(
               path: RoutePaths.addPlans.asRoutePath,
               name: RoutePaths.addPlans.name,
-              builder: (context, state) => Container(
-                color: Colors.red,
-              ),
+              builder: (context, state) => AddPlanView(),
             ),
           ],
         ),

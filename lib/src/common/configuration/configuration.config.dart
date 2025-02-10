@@ -93,7 +93,6 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.factory<_i982.SplashBloc>(() => _i982.SplashBloc());
-    gh.factory<_i301.AddPlanBloc>(() => _i301.AddPlanBloc());
     gh.singleton<_i308.SqfliteManager>(() => _i308.SqfliteManager());
     gh.lazySingleton<_i890.NetworkManager>(() => _i890.NetworkManager());
     gh.lazySingleton<_i152.SharedPreferencesManager>(
@@ -152,6 +151,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i626.ThemeRepository(gh<_i91.ThemeLocalDS>()));
     gh.factory<_i965.AddCosmeticBloc>(
         () => _i965.AddCosmeticBloc(gh<_i85.UserRepository>()));
+    gh.factory<_i301.AddPlanBloc>(
+        () => _i301.AddPlanBloc(gh<_i85.UserRepository>()));
     gh.lazySingleton<_i564.ThemeBloc>(
         () => _i564.ThemeBloc(gh<_i626.ThemeRepository>()));
     gh.factory<_i827.HomeBloc>(() => _i827.HomeBloc(

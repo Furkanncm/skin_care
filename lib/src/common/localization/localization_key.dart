@@ -39,7 +39,7 @@ enum LocalizationKey {
   deletionConfirmation('DeletionConfirmation'), // Silme Onayı
   deletionConfirmationExplanation('DeletionConfirmationExplanation'), // Silme işlemi geri alınamaz. Devam etmek istediğinize emin misiniz?
   delete('Delete'), // Sil
-  giveUp('GiveUp'), // Vazgeç
+  giveUp('Give Up'), // Vazgeç
   cancel('Cancel'), // İptal
   add('Add'), // Ekle
   changePassword('ChangePassword'), // Şifre Değiştir
@@ -67,8 +67,8 @@ enum LocalizationKey {
   filters('Filters'), // Filtreler
   applyFilter('ApplyFilter'), // Filtreyi Uygula
   changeTheme('ChangeTheme'), // Tema Değiştir
-  light('Aydınlık'), // Açık
-  dark('Karanlık'), // Koyu
+  light('Light Mode'), // Açık
+  dark('Dark Mode'), // Koyu
   error('Error'), // Hata
   ok('Ok'), // Tamam
   newVersionAvailable('NewVersionAvailable'), // Yeni versiyon mevcut
@@ -110,7 +110,17 @@ enum LocalizationKey {
   mustPickAPhoto("You must select a photo"),
   warning("Warning"),
   productAddedSuccessfully("Product added successfully"),
+  productRemovedSuccessfully("Product removed successfully"),
   productCouldNotBeAdded("Product could not be added"),
+  makeYourRoutine("Make Your Routine"),
+  morning("Morning"),
+  evening("Evening"),
+  thereIsNoCosmetic("There is no cosmetic in your list"),
+  prepareYourPlan("Prepare Your Plan"),
+  pleaseCheckYourRoutine("Please choose between morning or evening options."),
+  pleaseAddCosmetics("Please add at least 1 cosmetic in your routine list"),
+  thereIsAPlanForThatDay("There is a plan for that day"),
+  youSureUpdate("Do you want to update the plan?"),
   ;
 
   const LocalizationKey(this.value);

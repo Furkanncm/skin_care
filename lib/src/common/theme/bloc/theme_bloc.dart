@@ -32,6 +32,7 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
   }
 
   final ThemeRepository _themeRepository;
+  bool isDarkMode = false;
 
   void _changeTheme(ThemeChangedEvent event, Emitter<ThemeState> emit) {
     emit(state.copyWith(colorScheme: event.colorScheme));
@@ -41,8 +42,10 @@ class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
     final colorSchemes = _themeRepository.getColorSchemesFromLocal();
     if (state.colorScheme?.brightness == Brightness.light) {
       emit(state.copyWith(colorScheme: colorSchemes.firstWhere((element) => element.brightness == Brightness.dark)));
+      isDarkMode = true;
     } else {
       emit(state.copyWith(colorScheme: colorSchemes.firstWhere((element) => element.brightness == Brightness.light)));
+      isDarkMode = false;
     }
   }
 

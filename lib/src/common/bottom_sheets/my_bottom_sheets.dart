@@ -78,11 +78,6 @@ final class EditFieldBottomSheetTheme extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
-        appBarTheme: AppBarTheme(
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          titleTextStyle: context.textTheme.headlineSmall,
-        ),
         radioTheme: RadioThemeData(
           fillColor: WidgetStateProperty.all(context.colorScheme.primary),
         ),

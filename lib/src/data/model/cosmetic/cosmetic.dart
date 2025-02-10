@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_core/flutter_core.dart';
@@ -7,7 +8,8 @@ part 'cosmetic.g.dart';
 
 @JsonSerializable()
 @immutable
-class Cosmetic implements SelectableSearchMixin {
+class Cosmetic extends Equatable implements SelectableSearchMixin {
+  final String? id;
   final String? name;
   final String? description;
   final String? category;
@@ -15,6 +17,7 @@ class Cosmetic implements SelectableSearchMixin {
   final String? color;
 
   Cosmetic({
+    this.id,
     this.name,
     this.description,
     this.category,
@@ -37,4 +40,7 @@ class Cosmetic implements SelectableSearchMixin {
 
   @override
   String? get title => name;
+
+  @override
+  List<Object?> get props => [id, name, description, category, image, color];
 }

@@ -10,9 +10,9 @@ abstract class SCDialogs {
     return popupManager.showDefaultAdaptiveAlertDialog<void>(
       id: id,
       context: context,
-      title: CoreText(LocalizationKey.deletionConfirmation.tr(context, listen: false)),
-      content: CoreText(LocalizationKey.deletionConfirmationExplanation.tr(context, listen: false)),
-      okButtonLabel: LocalizationKey.delete.tr(context, listen: false),
+      title: CoreText.titleMedium(LocalizationKey.thereIsAPlanForThatDay.value),
+      content: CoreText.bodyMedium(LocalizationKey.youSureUpdate.value),
+      okButtonLabel: LocalizationKey.ok.tr(context, listen: false),
       cancelButtonLabel: LocalizationKey.giveUp.tr(context, listen: false),
       reversedActions: true,
       isDestuctiveOkButtonIOS: true,
@@ -57,6 +57,20 @@ abstract class SCDialogs {
       onOkButtonPressed: () => popupManager.hidePopup(id: id, result: true),
       isDestuctiveOkButtonIOS: true,
       isDefaultOkButtonIOS: true,
+    );
+  }
+
+  static Future<DateTime?> showDatePickerDialog({
+    required BuildContext context,
+    required DateTime initialDate,
+  }) {
+    final id = UniqueKey().toString();
+    return popupManager.showAdaptiveDatePicker(
+      id: id,
+      context: context,
+      initialDateTime: initialDate,
+      minimumDate: DateTime.utc(2010, 10, 16),
+      maximumDate: DateTime.utc(2030, 3, 14),
     );
   }
 }

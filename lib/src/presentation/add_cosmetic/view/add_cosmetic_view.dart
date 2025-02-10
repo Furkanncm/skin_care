@@ -40,8 +40,10 @@ final class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: CoreText.titleLarge(LocalizationKey.addNewProduct.value),
+      title: CoreText.headlineMedium(LocalizationKey.addNewProduct.value),
       centerTitle: true,
+      backgroundColor: context.colorScheme.primary.withOpacity(0.4),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))),
     );
   }
 
@@ -287,7 +289,7 @@ final class _SaveButton extends StatelessWidget {
     final bloc = context.watch<AddCosmeticBloc>();
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton.icon(
+      child: CoreOutlinedButton.autoIndicator(
         onPressed: () {
           if (bloc.state.image == null) {
             SCDialogs.showWarningMessageDialog(context: context, message: LocalizationKey.mustPickAPhoto.value);
@@ -295,14 +297,13 @@ final class _SaveButton extends StatelessWidget {
           }
           bloc.add(const AddCosmeticSaveButtonPressedEvent());
         },
-        icon: Icon(Icons.save, color: context.colorScheme.onPrimary),
-        label: CoreText.bodyMedium(LocalizationKey.save.value),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: context.colorScheme.primary,
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.save),
+            horizontalBox8,
+            CoreText.bodyLarge(LocalizationKey.save.value),
+          ],
         ),
       ),
     );

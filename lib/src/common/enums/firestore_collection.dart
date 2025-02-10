@@ -1,6 +1,7 @@
 enum FirestoreCollection {
   users('users'),
-  cosmetics('cosmetics');
+  cosmetics('cosmetics'),
+  plans('plans');
 
   final String value;
 

@@ -7,6 +7,7 @@ part of 'cosmetic.dart';
 // **************************************************************************
 
 Cosmetic _$CosmeticFromJson(Map<String, dynamic> json) => Cosmetic(
+      id: json['id'] as String?,
       name: json['name'] as String?,
       description: json['description'] as String?,
       category: json['category'] as String?,
@@ -15,6 +16,7 @@ Cosmetic _$CosmeticFromJson(Map<String, dynamic> json) => Cosmetic(
     );
 
 Map<String, dynamic> _$CosmeticToJson(Cosmetic instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'description': instance.description,
       'category': instance.category,
