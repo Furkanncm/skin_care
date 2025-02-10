@@ -102,7 +102,7 @@ enum LocalizationKey {
   descriptionForCosmetic("You can add your cosmetic products to your list by entering the information below."),
   category("Category"),
   chooseCategory("Choose Category"),
-  color("Color"), 
+  color("Color"),
   pickColor("Pick Color"),
   suggestionFieldToBeCorrected("Please correct the fields below."),
   takePhotoFromCamera("Take Photo From Camera"),
@@ -111,7 +111,6 @@ enum LocalizationKey {
   warning("Warning"),
   productAddedSuccessfully("Product added successfully"),
   productCouldNotBeAdded("Product could not be added"),
-  
   ;
 
   const LocalizationKey(this.value);

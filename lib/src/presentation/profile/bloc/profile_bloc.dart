@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:bloc_clean_architecture/src/common/extensions/future_extension.dart';
@@ -9,6 +10,7 @@ import 'package:bloc_clean_architecture/src/domain/user/user_repository.dart';
 import 'package:bloc_clean_architecture/src/presentation/shared_blocs/auth/bloc/auth_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_core/flutter_core.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../data/model/color_scheme/dto/color_scheme_dto.dart';
@@ -29,13 +31,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) : super(ProfileState()) {
     on<ProfileEventInitialize>(_profileEventInitialize);
     on<ProfileLogOutEvent>(_profileLogOutEvent);
+    on<ProfileChangePhotoEvent>(_profileChangePhotoEvent);
   }
 
   final AuthRepository _authRepository;
   final UserRepository _userRepository;
   final ThemeRepository _themeRepository;
   final LocalizationRepository _localizationRepository;
-
+  final ImagePicker _imagePicker = ImagePicker();
 
   Future<void> _profileEventInitialize(ProfileEventInitialize event, Emitter<ProfileState> emit) async {
     final user = await _userRepository.getLocalUser();
@@ -53,5 +56,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     _authRepository.changeAuthState(authState: const AuthState.unAuthenticated());
     unawaited(_userRepository.deleteLocalUser());
     unawaited(_authRepository.deleteUserCredentials());
+  }
+
+  Future<void> _profileChangePhotoEvent(ProfileChangePhotoEvent event, Emitter<ProfileState> emit) async {
+    final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (image.isNull) return;
+    final File file = File(image!.path);
+    final user = state.user!.copyWith(imagePath: file.path);
+    emit(state.copyWith(user: user));
   }
 }

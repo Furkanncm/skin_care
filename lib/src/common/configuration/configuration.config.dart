@@ -58,6 +58,8 @@ import 'package:bloc_clean_architecture/src/domain/user/user_repository.dart'
     as _i85;
 import 'package:bloc_clean_architecture/src/presentation/add_cosmetic/bloc/add_cosmetic_bloc.dart'
     as _i965;
+import 'package:bloc_clean_architecture/src/presentation/add_plan/bloc/add_plan_bloc.dart'
+    as _i301;
 import 'package:bloc_clean_architecture/src/presentation/home/bloc/home_bloc.dart'
     as _i827;
 import 'package:bloc_clean_architecture/src/presentation/login/bloc/login_bloc.dart'
@@ -91,6 +93,7 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.factory<_i982.SplashBloc>(() => _i982.SplashBloc());
+    gh.factory<_i301.AddPlanBloc>(() => _i301.AddPlanBloc());
     gh.singleton<_i308.SqfliteManager>(() => _i308.SqfliteManager());
     gh.lazySingleton<_i890.NetworkManager>(() => _i890.NetworkManager());
     gh.lazySingleton<_i152.SharedPreferencesManager>(

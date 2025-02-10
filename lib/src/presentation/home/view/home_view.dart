@@ -119,7 +119,7 @@ final class _HeaderAndCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height * 0.35,
+      height: context.height * 0.30,
       width: context.width,
       decoration: BoxDecoration(
         color: context.colorScheme.surface,

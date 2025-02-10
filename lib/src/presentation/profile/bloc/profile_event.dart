@@ -14,3 +14,14 @@ final class ProfileEventInitialize extends ProfileEvent {
 final class ProfileLogOutEvent extends ProfileEvent {
   const ProfileLogOutEvent();
 }
+
+final class ProfileUpdateEvent extends ProfileEvent {
+  final MyUser user;
+
+  const ProfileUpdateEvent(this.user);
+
+}
+
+final class ProfileChangePhotoEvent extends ProfileEvent {
+
+}

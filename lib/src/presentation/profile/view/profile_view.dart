@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc_clean_architecture/src/common/configuration/configuration.dart';
 import 'package:bloc_clean_architecture/src/common/constants/app_contants.dart';
 import 'package:bloc_clean_architecture/src/presentation/profile/bloc/profile_bloc.dart';
@@ -10,6 +12,7 @@ import '../../../common/localization/localization_key.dart';
 import '../../../common/theme/bloc/theme_bloc.dart';
 import '../../../common/widgets/adaptive_indicator/adaptive_indicator.dart';
 import '../../../data/model/color_scheme/dto/color_scheme_dto.dart';
+import 'enum/profil_info_enum.dart';
 
 @immutable
 final class ProfileView extends StatefulWidget {
@@ -44,18 +47,23 @@ final class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Column(
-        children: [
-          CoreText.headlineMedium(LocalizationKey.myProfile.value),
-          verticalBox4,
-          Divider(),
-        ],
-      ),
+      backgroundColor: context.colorScheme.primary,
+      centerTitle: true,
+      title: CoreText.headlineSmall(LocalizationKey.myProfile.tr(context), textColor: context.colorScheme.onPrimary),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.logout_outlined, color: context.colorScheme.surface, size: 30),
+          onPressed: () async {
+            final isLogOut = await SCDialogs.showLogoutDialog(context: context);
+            if (isLogOut ?? false) context.read<ProfileBloc>().add(ProfileLogOutEvent());
+          },
+        ),
+      ],
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 @immutable
@@ -63,49 +71,26 @@ final class _Body extends StatelessWidget {
   const _Body();
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    final bloc = context.watch<ProfileBloc>();
+    final user = bloc.state.user;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const _UserInfoField(),
+        verticalBox12,
+        _ThemeChangeField(),
         Padding(
-          padding: AppConstants.paddingConstants.pagePadding,
+          padding: AppConstants.paddingConstants.pageLowPadding,
           child: Column(
-            children: [
-              Column(
-                children: [
-                  _UserInfoField(),
-                  verticalBox20,
-                  _ThemeChangeField(),
-                ],
-              ),
-              Expanded(child: emptyBox),
-            ],
-          ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: ProfilInfoEnum.values.toList().map((e) {
+                return ListTile(
+                  title: CoreText.bodyLarge(e.name.characters.first.toUpperCase() + e.name.substring(1)),
+                  trailing: CoreText.bodyMedium(e.value(user)),
+                );
+              }).toList()),
         ),
-        _LogOutButton(),
       ],
-    );
-  }
-}
-
-@immutable
-final class _LogOutButton extends StatelessWidget {
-  const _LogOutButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 20,
-      left: 0,
-      right: 0,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: CoreOutlinedButton.autoIndicator(
-          child: Center(child: CoreText.bodyLarge(LocalizationKey.logout.value)),
-          onPressed: () async {
-            final isLogOut = await SCDialogs.showLogoutDialog(context: context);
-            if (isLogOut ?? false) context.read<ProfileBloc>().add(ProfileLogOutEvent());
-          },
-        ),
-      ),
     );
   }
 }
@@ -119,24 +104,68 @@ final class _UserInfoField extends StatelessWidget {
     final bloc = context.watch<ProfileBloc>();
     final user = bloc.state.user;
     return Container(
-      width: double.infinity,
-      height: context.height * 0.15,
+      height: context.height * 0.2,
       decoration: BoxDecoration(
-        color: context.colorScheme.primary.withOpacity(0.4),
-        borderRadius: BorderRadius.circular(16),
+        color: context.colorScheme.primary,
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
       ),
-      child: Center(
-        child: ListTile(
-          leading: CircleAvatar(
-            radius: 30,
-            backgroundColor: context.colorScheme.primary,
-            child: CoreText.headlineMedium(
-              (user?.name?.characters.first.toUpperCase() ?? '') + (user?.surName?.characters.first.toUpperCase() ?? ''),
-              textColor: context.colorScheme.onPrimary,
+      child: Padding(
+        padding: AppConstants.paddingConstants.pagePadding,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 115,
+                  height: 115,
+                  child: Stack(
+                    children: [
+                      ClipOval(
+                        child: Container(
+                          padding: EdgeInsets.zero,
+                          width: 100,
+                          height: 100,
+                          color: context.colorScheme.surface,
+                          child: Image.file(
+                            File(user?.imagePath ?? ''),
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) => Center(
+                              child: CoreText.displayMedium(user?.name?.characters.first.toUpperCase() ?? ''),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 10,
+                        right: 10,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: context.colorScheme.surface,
+                          ),
+                          child: CoreIconButton(
+                            icon: Icon(Icons.camera_alt_outlined),
+                            onPressed: () => context.read<ProfileBloc>().add(ProfileChangePhotoEvent()),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                horizontalBox20,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CoreText.headlineSmall(
+                      (user?.name ?? '').characters.first.toUpperCase() + (user?.name ?? '').substring(1) + ' ' + (user?.surName ?? '').characters.first.toUpperCase() + (user?.surName ?? '').substring(1),
+                      textColor: context.colorScheme.onPrimary,
+                    ),
+                    CoreText.titleSmall(user?.email ?? '', textColor: context.colorScheme.onPrimary),
+                  ],
+                ),
+              ],
             ),
-          ),
-          title: CoreText.titleLarge((user?.name ?? '') + ' ' + (user?.surName ?? '')),
-          subtitle: CoreText.bodyMedium(user?.email ?? ''),
+          ],
         ),
       ),
     );
@@ -149,15 +178,18 @@ final class _ThemeChangeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.height * 0.3,
-      child: ListView.separated(
-        itemBuilder: (context, index) {
-          final colorScheme = context.watch<ProfileBloc>().state.colorSchemes[index];
-          return _ThemeOptionListTile(colorScheme: colorScheme);
-        },
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: context.watch<ProfileBloc>().state.colorSchemes.length,
+    return Padding(
+      padding: AppConstants.paddingConstants.pageLowPadding,
+      child: SizedBox(
+        height: context.height * 0.15,
+        child: ListView.separated(
+          itemBuilder: (context, index) {
+            final colorScheme = context.watch<ProfileBloc>().state.colorSchemes[index];
+            return _ThemeOptionListTile(colorScheme: colorScheme);
+          },
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: context.watch<ProfileBloc>().state.colorSchemes.length,
+        ),
       ),
     );
   }

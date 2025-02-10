@@ -24,16 +24,8 @@ final class UserRemoteDS implements IUserRemoteDS {
 
     // ignore: inference_failure_on_instance_creation
     await Future.delayed(500.milliseconds);
-    return  BaseResponse(
-      data: MyUser(
-        id: '0f8fad5b-d9cb-469f-a165-70867728950e',
-        userName: 'admin',
-        name: 'admin name',
-        surName: 'admin surname',
-        email: 'admin@corewish.com',
-        phone: '',
-        password: "asdasdasdadasda"
-      ),
+    return BaseResponse(
+      data: MyUser(id: '0f8fad5b-d9cb-469f-a165-70867728950e', Username: 'admin', name: 'admin name', surName: 'admin surname', email: 'admin@corewish.com', phone: '', password: "asdasdasdadasda"),
       succeeded: true,
       messages: [
         Message(
