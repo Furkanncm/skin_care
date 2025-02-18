@@ -151,14 +151,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i626.ThemeRepository(gh<_i91.ThemeLocalDS>()));
     gh.factory<_i965.AddCosmeticBloc>(
         () => _i965.AddCosmeticBloc(gh<_i85.UserRepository>()));
+    gh.factory<_i827.HomeBloc>(() => _i827.HomeBloc(gh<_i85.UserRepository>()));
     gh.factory<_i301.AddPlanBloc>(
         () => _i301.AddPlanBloc(gh<_i85.UserRepository>()));
     gh.lazySingleton<_i564.ThemeBloc>(
         () => _i564.ThemeBloc(gh<_i626.ThemeRepository>()));
-    gh.factory<_i827.HomeBloc>(() => _i827.HomeBloc(
-          gh<_i291.AuthRepository>(),
-          gh<_i85.UserRepository>(),
-        ));
     gh.factory<_i456.LoginBloc>(() => _i456.LoginBloc(
           gh<_i291.AuthRepository>(),
           gh<_i85.UserRepository>(),

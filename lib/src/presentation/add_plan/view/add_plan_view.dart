@@ -24,33 +24,7 @@ final class AddPlanView extends StatelessWidget {
           if (state.status == AddPlanStatus.loading) const Center(child: AdaptiveIndicator());
           return Scaffold(
             appBar: _AppBar(),
-            body: Padding(
-              padding: AppConstants.paddingConstants.pagePadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _CalendarWidget(),
-                  verticalBox12,
-                  _MorningAndEveningField(),
-                  verticalBox12,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CoreText.titleLarge(LocalizationKey.cosmetics.value, textColor: context.colorScheme.primary),
-                      CoreIconButton(icon: Icon(Icons.refresh_outlined), onPressed: () => context.read<AddPlanBloc>().add(AddPlanInitialEvent())),
-                    ],
-                  ),
-                  Divider(),
-                  verticalBox4,
-                  CoreText.bodySmall(
-                    "Toplam ürün sayısı: ${context.read<AddPlanBloc>().state.addedCosmetics?.length.toString() ?? 0}",
-                    textAlign: TextAlign.end,
-                  ),
-                  _Cosmetics(),
-                  _SubmitButton()
-                ],
-              ),
-            ),
+            body: _Body(),
           );
         },
       ),
@@ -67,13 +41,49 @@ final class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: CoreText.headlineMedium(LocalizationKey.makeYourRoutine.value),
       centerTitle: true,
-      backgroundColor: context.colorScheme.primary.withOpacity(0.4),
+      backgroundColor:context.colorScheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))),
     );
   }
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+@immutable
+final class _Body extends StatelessWidget {
+  const _Body();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: AppConstants.paddingConstants.pagePadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _CalendarWidget(),
+          verticalBox12,
+          _MorningAndEveningField(),
+          verticalBox12,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CoreText.titleLarge(LocalizationKey.cosmetics.value, textColor: context.colorScheme.primary),
+              CoreIconButton(icon: Icon(Icons.refresh_outlined), onPressed: () => context.read<AddPlanBloc>().add(AddPlanInitialEvent())),
+            ],
+          ),
+          Divider(),
+          verticalBox4,
+          CoreText.bodySmall(
+            "Toplam ürün sayısı: ${context.read<AddPlanBloc>().state.addedCosmetics?.length.toString() ?? 0}",
+            textAlign: TextAlign.end,
+          ),
+          _Cosmetics(),
+          _SubmitButton()
+        ],
+      ),
+    );
+  }
 }
 
 @immutable

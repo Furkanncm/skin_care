@@ -24,7 +24,7 @@ class BottomNavigationBarView extends StatelessWidget {
         items: [
           /// Routine
           SalomonBottomBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             title: CoreText.bodyMedium(LocalizationKey.routines.value),
             selectedColor: Colors.blue,
           ),
@@ -45,7 +45,7 @@ class BottomNavigationBarView extends StatelessWidget {
 
           /// Profile
           SalomonBottomBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person_outlined),
             title: CoreText.bodyMedium(LocalizationKey.myProfile.value),
             selectedColor: Colors.teal,
           ),

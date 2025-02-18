@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:bloc_clean_architecture/src/common/configuration/configuration.dart';
-import 'package:bloc_clean_architecture/src/common/constants/app_contants.dart';
 import 'package:bloc_clean_architecture/src/common/localization/localization_key.dart';
 import 'package:bloc_clean_architecture/src/common/widgets/adaptive_indicator/adaptive_indicator.dart';
 import 'package:bloc_clean_architecture/src/presentation/home/bloc/home_bloc.dart';
@@ -8,103 +9,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_core/flutter_core.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-@immutable
-final class HomeView extends StatelessWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(),
       body: BlocProvider(
         create: (context) => getIt<HomeBloc>()..add(HomeInitializedEvent()),
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state.status == HomeStatus.loading) {
-              return AdaptiveIndicator();
-            } else {
-              final username = state.user?.name ?? '';
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _HeaderAndCalendar(),
-                  verticalBox4,
-                  Padding(
-                    padding: AppConstants.paddingConstants.pageLowPadding,
-                    child: CoreText.bodyLarge("Hello "+(username.characters.first.toUpperCase() + username.substring(1)) + LocalizationKey.sloganWithUserName.value),
-                  ),
-                  Divider(indent: context.width * 0.05, endIndent: context.width * 0.05),
-                  verticalBox12,
-                  Expanded(
-                    child: GridView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: 10,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 0.8,
-                      ),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: AppConstants.paddingConstants.horizontalPadding,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: context.colorScheme.secondary,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: GestureDetector(
-                                      child: AnimatedContainer(
-                                        duration: const Duration(milliseconds: 200),
-                                        width: 24,
-                                        height: 24,
-                                        decoration: BoxDecoration(
-                                          color: true ? Colors.blue : Colors.white,
-                                          borderRadius: BorderRadius.circular(8),
-                                          border: Border.all(
-                                            color: false ? Colors.blue : Colors.grey,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        child: true
-                                            ? const Icon(
-                                                Icons.check,
-                                                size: 18,
-                                                color: Colors.white,
-                                              )
-                                            : null,
-                                      ),
-                                    ),
-                                  ),
-                                  verticalBox8,
-                                  Expanded(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.network(
-                                        "https://picsum.photos/200/300",
-                                        width: double.infinity, // Genişliği tamamen kaplasın
-                                        fit: BoxFit.fill, // Oranları bozmadan içini doldur
-                                      ),
-                                    ),
-                                  ),
-                                  Align(alignment: Alignment.centerLeft, child: CoreText.bodyLarge("Serum")),
-                                  Align(alignment: Alignment.centerLeft, child: CoreText.bodyMedium("Korendy"))
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              );
+              return const Center(child: AdaptiveIndicator());
             }
+            final username = state.user?.name ?? '';
+            return ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                _HeaderSection(username: username, state: state),
+                const SizedBox(height: 16),
+                _RoutinesSection(state: state),
+              ],
+            );
           },
         ),
       ),
@@ -112,159 +40,200 @@ final class HomeView extends StatelessWidget {
   }
 }
 
-@immutable
-final class _HeaderAndCalendar extends StatelessWidget {
-  const _HeaderAndCalendar();
+/// Üst kısım: Karşılama mesajı ve takvim.
+class _HeaderSection extends StatelessWidget {
+  final String username;
+  final HomeState state;
+  const _HeaderSection({
+    required this.username,
+    required this.state,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height * 0.30,
-      width: context.width,
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       decoration: BoxDecoration(
-        color: context.colorScheme.surface,
-        borderRadius: BorderRadius.circular(30),
+        gradient: LinearGradient(
+          colors: [context.colorScheme.primary, context.colorScheme.secondary],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Hello ${username.isNotEmpty ? (username[0].toUpperCase() + username.substring(1)) : ''}",
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            LocalizationKey.sloganWithUserName.value,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white70),
+          ),
+          const SizedBox(height: 16),
+
+          /// Gömülü sade takvim widget'ı.
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: TableCalendar(
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              rowHeight: 40,
+              firstDay: DateTime.utc(2010, 10, 16),
+              lastDay: DateTime.utc(2030, 3, 14),
+              focusedDay: state.focusedDay ?? DateTime.now(),
+              currentDay: state.currentDay,
+              headerVisible: false,
+              daysOfWeekVisible: true,
+              calendarFormat: CalendarFormat.week,
+              onDaySelected: (selectedDay, focusedDay) => context.read<HomeBloc>().add(HomeDayChangedEvent(currentDay: selectedDay)),
+              onPageChanged: (focusedDay) => context.read<HomeBloc>().add(HomePageChangedOnCalendar(focusedDay: focusedDay)),
+              calendarBuilders: CalendarBuilders(
+                todayBuilder: (context, day, focusedDay) => _DayTile(day: day, isToday: true),
+                defaultBuilder: (context, day, focusedDay) => _DayTile(day: day, isToday: false),
+                outsideBuilder: (context, day, focusedDay) => _DayTile(day: day, isToday: false),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Takvimdeki her gün için basit gün kutusu.
+class _DayTile extends StatelessWidget {
+  final DateTime day;
+  final bool isToday;
+  const _DayTile({required this.day, required this.isToday, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(4),
+      width: 32,
+      height: 32,
+      decoration: BoxDecoration(
+        color: isToday ? context.colorScheme.primary : Colors.transparent,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        day.day.toString(),
+        style: TextStyle(
+          color: isToday ? Colors.white : Colors.black87,
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+}
+
+/// Rutinlerin listelendiği bölüm.
+class _RoutinesSection extends StatelessWidget {
+  final HomeState state;
+  const _RoutinesSection({required this.state, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final morningCosmetics = state.todaysPlan?.morning?.cosmetics ?? [];
+    final eveningCosmetics = state.todaysPlan?.evening?.cosmetics ?? [];
+
+    if (morningCosmetics.isEmpty && eveningCosmetics.isEmpty) {
+      return Center(
+        child: Text(
+          LocalizationKey.thereIsAPlanForThatDay.value,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (morningCosmetics.isNotEmpty)
+          _RoutineList(
+            title: "Sabah Rutini",
+            cosmetics: morningCosmetics,
+          ),
+        if (eveningCosmetics.isNotEmpty)
+          _RoutineList(
+            title: "Akşam Rutini",
+            cosmetics: eveningCosmetics,
+          ),
+      ],
+    );
+  }
+}
+
+// Sabaha ve akşama özel rutin tasarımı
+class _RoutineList extends StatelessWidget {
+  final String title;
+  final List<dynamic> cosmetics;
+  const _RoutineList({
+    required this.title,
+    required this.cosmetics,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.05),
             spreadRadius: 2,
-            blurRadius: 8,
-            offset: Offset(4, 4),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CoreText.headlineMedium(LocalizationKey.dailyRoutine.value),
-          verticalBox4,
-          Divider(
-            indent: context.width * 0.05,
-            endIndent: context.width * 0.05,
+          // Üst kısım: İkon ve başlık
+          Row(
+            children: [
+              Icon(
+                title == "Sabah Rutini" ? Icons.wb_sunny : Icons.nights_stay,
+                color: context.colorScheme.primary,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: context.colorScheme.primary,
+                    ),
+              ),
+            ],
           ),
-          verticalBox16,
-          _MonthAndBackToTodayWidgets(),
-          verticalBox4,
-          _CalendarWidget(),
-        ],
-      ),
-    );
-  }
-}
-
-@immutable
-final class _MonthAndBackToTodayWidgets extends StatelessWidget {
-  const _MonthAndBackToTodayWidgets();
-
-  @override
-  Widget build(BuildContext context) {
-    final bloc = context.watch<HomeBloc>();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: CoreText.bodyLarge(bloc.state.currentDay?.toMonthName()),
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: GestureDetector(
-            onTap: () => bloc.isDayInWeek ? emptyBox : bloc.add(HomeBackToTodayEvent()),
-            child: bloc.isDayInWeek ? emptyBox : CoreText.bodyLarge(LocalizationKey.goNow.value, textColor: Colors.blue),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-@immutable
-final class _CalendarWidget extends StatelessWidget {
-  const _CalendarWidget();
-
-  @override
-  Widget build(BuildContext context) {
-    final bloc = context.watch<HomeBloc>();
-    return Padding(
-      padding: AppConstants.paddingConstants.horizontalPadding,
-      child: TableCalendar(
-        startingDayOfWeek: StartingDayOfWeek.monday,
-        rowHeight: context.height * 0.1,
-        firstDay: DateTime.utc(2010, 10, 16),
-        lastDay: DateTime.utc(2030, 3, 14),
-        focusedDay: bloc.state.focusedDay ?? DateTime.now(),
-        currentDay: bloc.state.currentDay,
-        headerVisible: false,
-        daysOfWeekVisible: false,
-        calendarFormat: CalendarFormat.week,
-        onDaySelected: (selectedDay, focusedDay) => bloc.add(HomeDayChangedEvent(currentDay: selectedDay)),
-        onPageChanged: (focusedDay) => bloc.add(HomePageChangedOnCalendar(focusedDay: focusedDay)),
-        calendarBuilders: CalendarBuilders(
-          todayBuilder: (context, day, focusedDay) {
-            return _TodayCardBuilder(day: day);
-          },
-          defaultBuilder: (context, day, focusedDay) {
-            return _NotTodayCardBuilder(day: day);
-          },
-          outsideBuilder: (context, day, focusedDay) {
-            return _NotTodayCardBuilder(day: day);
-          },
-        ),
-      ),
-    );
-  }
-}
-
-@immutable
-final class _TodayCardBuilder extends StatelessWidget {
-  _TodayCardBuilder({required this.day});
-
-  final DateTime day;
-
-  @override
-  Widget build(BuildContext context) {
-    return _TodayColumnWidget(day: day);
-  }
-}
-
-@immutable
-final class _TodayColumnWidget extends StatelessWidget {
-  _TodayColumnWidget({required this.day});
-
-  final DateTime day;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _TodayWidgetsIndent(),
-        verticalBox8,
-        CoreText.bodyLarge(day.toDayName().truncateToLength(length: 3, suffix: "")),
-        verticalBox8,
-        CircleAvatar(radius: 15, backgroundColor: context.colorScheme.primary, child: CoreText.bodyLarge(day.day.toString())),
-      ],
-    );
-  }
-}
-
-@immutable
-final class _TodayWidgetsIndent extends StatelessWidget {
-  const _TodayWidgetsIndent();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: context.width * 0.05,
-      height: context.height * 0.004,
-      decoration: BoxDecoration(
-        color: context.colorScheme.primary,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: context.colorScheme.primary.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 8,
-            offset: Offset(4, 4),
+          const SizedBox(height: 16),
+          // Yatay liste halinde kozmetik kartları
+          SizedBox(
+            height: 220,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: cosmetics.length,
+              separatorBuilder: (context, index) => const SizedBox(width: 16),
+              itemBuilder: (context, index) {
+                final item = cosmetics[index];
+                return _CosmeticCard(item: item);
+              },
+            ),
           ),
         ],
       ),
@@ -272,43 +241,44 @@ final class _TodayWidgetsIndent extends StatelessWidget {
   }
 }
 
-@immutable
-final class _NotTodayCardBuilder extends StatelessWidget {
-  _NotTodayCardBuilder({required this.day});
+class _CosmeticCard extends StatelessWidget {
+  final dynamic item; // Modelinizin tipi varsa onu kullanın.
+  const _CosmeticCard({required this.item, super.key});
 
-  final DateTime day;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      width: context.width,
-      height: context.height,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-        color: context.colorScheme.surface,
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
       ),
-      child: _NotTodayColumnWidget(day: day),
-    );
-  }
-}
-
-@immutable
-final class _NotTodayColumnWidget extends StatelessWidget {
-  _NotTodayColumnWidget({required this.day});
-
-  final DateTime day;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        verticalBox8,
-        CoreText.bodyLarge(day.toDayName().truncateToLength(length: 3, suffix: "")),
-        verticalBox8,
-        CircleAvatar(radius: 15, backgroundColor: context.colorScheme.surface, child: CoreText.bodyLarge(day.day.toString())),
-      ],
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.file(
+            File(item?.image ?? "safafs"),
+            width: 60,
+            height: 60,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => Container(
+              width: 60,
+              height: 60,
+              color: Colors.red,
+              child: Icon(Icons.image, color: Colors.grey[600]),
+            ),
+          ),
+        ),
+        title: Text(
+          item?.name ?? "Unknown",
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          item?.category ?? "Unknown",
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ),
     );
   }
 }

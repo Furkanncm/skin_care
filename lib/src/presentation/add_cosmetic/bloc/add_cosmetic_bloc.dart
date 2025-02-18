@@ -57,7 +57,15 @@ class AddCosmeticBloc extends Bloc<AddCosmeticEvent, AddCosmeticState> {
   Future<void> _addCosmeticSaveButtonPressedEvent(AddCosmeticSaveButtonPressedEvent event, Emitter<AddCosmeticState> emit) async {
     if (!(formKey.currentState!.validate())) return;
     final user = _userRepository.getLocalUser();
-    final cosmetic = Cosmetic(name: nameController.text, description: descriptionController.text, category: state.selectedCategory?.name, color: state.selectedColor?.hexCode, image: state.image?.path);
+    final cosmetic = Cosmetic(
+      name: nameController.text,
+      description: descriptionController.text,
+      category: state.selectedCategory?.name,
+      color: state.selectedColor?.hexCode,
+      image: state.image?.path,
+      isEvening: false,
+      isMorning: false,
+    );
     try {
       await FirebaseFirestore.instance.collection(FirestoreCollection.users.value).doc(user?.id ?? "").collection(FirestoreCollection.cosmetics.value).add(cosmetic.toJson()).withIndicator();
       SCToasts.showSuccessToast(message: LocalizationKey.productAddedSuccessfully.value);

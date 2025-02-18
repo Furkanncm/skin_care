@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:bloc_clean_architecture/src/common/dialogs/sc_dialogs.dart';
 import 'package:bloc_clean_architecture/src/common/enums/firestore_collection.dart';
+import 'package:bloc_clean_architecture/src/common/extensions/future_extension.dart';
 import 'package:bloc_clean_architecture/src/data/model/my_user/my_user.dart';
 import 'package:bloc_clean_architecture/src/domain/user/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_core/flutter_core.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../common/localization/localization_key.dart';
+import '../../../common/toasts/my_toasts.dart';
 import '../../../data/model/cosmetic/cosmetic.dart';
 
 part 'add_plan_event.dart';
@@ -59,29 +61,57 @@ class AddPlanBloc extends Bloc<AddPlanEvent, AddPlanState> {
     if (updatedList.contains(event.cosmetic)) {
       updatedList.remove(event.cosmetic);
     } else {
-      updatedList.add(event.cosmetic);
+      final oldCosmetic = event.cosmetic;
+      final cosmetic = Cosmetic().copyWith(
+        id: oldCosmetic.id,
+        name: oldCosmetic.name,
+        category: oldCosmetic.category,
+        image: oldCosmetic.image,
+        description: oldCosmetic.description,
+        color: oldCosmetic.color,
+        isMorning: state.isMorning,
+        isEvening: state.isEvening,
+      );
+      updatedList.add(cosmetic);
     }
     emit(state.copyWith(addedCosmetics: updatedList));
   }
 
   Future<void> _addPlanSubmitPlansEvent(AddPlanSubmitPlansEvent event, Emitter<AddPlanState> emit) async {
-    final planRef = await FirebaseFirestore.instance.collection(FirestoreCollection.users.name).doc(state.user?.id).collection(FirestoreCollection.plans.name).doc(state.selectedDate!.toddMMy.toString());
+    // "plans" yerine artık "routines" koleksiyonunu kullanıyoruz.
+    final routineRef = FirebaseFirestore.instance
+        .collection(FirestoreCollection.users.name)
+        .doc(state.user?.id)
+        .collection("routines") // FirestoreCollection.routines tanımlı değilse direkt string kullanabilirsiniz.
+        .doc(state.selectedDate!.toddMMy.toString());
 
-    final existingPlan = await planRef.get();
-    if (existingPlan.exists) {
-      SCDialogs.showDeletionConfirmationDialog(
-          onDelete: () async {
-            await planRef.set(
-              {
-                'cosmetics': state.addedCosmetics?.map((e) => e.toJson()).toList() ?? [],
-                'isMorning': state.isMorning,
-                'isEvening': state.isEvening,
-              },
-              SetOptions(merge: false),
-            );
-          },
-          context: event.context);
-      return;
+    try {
+      // Eğer sabah rutini seçildiyse, eklenen her kozmeti ayrı belge olarak morning alt koleksiyonuna ekle
+      if (state.isMorning) {
+        for (final cosmetic in state.addedCosmetics ?? []) {
+          await routineRef
+              .collection("morning")
+              .doc(cosmetic.id) // Kozmetik id'sini belge id'si olarak kullanıyoruz
+              .set({
+            'date': state.selectedDate!.toddMMy.toString(),
+            ...cosmetic.toJson(),
+          }, SetOptions(merge: true)).withIndicator();
+        }
+      }
+
+      // Eğer akşam rutini seçildiyse, eklenen her kozmeti ayrı belge olarak evening alt koleksiyonuna ekle
+      if (state.isEvening) {
+        for (final cosmetic in state.addedCosmetics ?? []) {
+          await routineRef.collection("evening").doc(cosmetic.id).set({
+            'date': state.selectedDate!.toddMMy.toString(),
+            ...cosmetic.toJson(),
+          }, SetOptions(merge: true)).withIndicator();
+        }
+      }
+
+      SCToasts.showSuccessToast(message: LocalizationKey.planAddedSuccesfully.value);
+    } catch (e) {
+      SCToasts.showWarningToast(message: LocalizationKey.planCanNotSuccesfully.value);
     }
   }
 }

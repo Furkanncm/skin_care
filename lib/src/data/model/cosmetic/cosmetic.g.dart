@@ -13,6 +13,8 @@ Cosmetic _$CosmeticFromJson(Map<String, dynamic> json) => Cosmetic(
       category: json['category'] as String?,
       image: json['image'] as String?,
       color: json['color'] as String?,
+      isMorning: json['isMorning'] as bool?,
+      isEvening: json['isEvening'] as bool?,
     );
 
 Map<String, dynamic> _$CosmeticToJson(Cosmetic instance) => <String, dynamic>{
@@ -22,4 +24,6 @@ Map<String, dynamic> _$CosmeticToJson(Cosmetic instance) => <String, dynamic>{
       'category': instance.category,
       'image': instance.image,
       'color': instance.color,
+      'isMorning': instance.isMorning,
+      'isEvening': instance.isEvening,
     };

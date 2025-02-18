@@ -91,7 +91,7 @@ enum LocalizationKey {
   firstLogin("Please log in to continue"),
   noAccount("You don't have an account?"),
   slogan("Your skin glows with you! 🌿✨ Create your own skincare routine and shine!"),
-  sloganWithUserName(", your skin deserves the best! ✨🌿 Create your perfect skincare routine today!"),
+  sloganWithUserName("Your skin deserves the best! ✨🌿 Create your perfect skincare routine today!"),
   sloganForLogin("Radiant skin, confident you! 🌸✨ Start your skincare journey today!"),
   accountCreatedSuccess("Your account has been created successfully."),
   cosmetics("Cosmetics"),
@@ -111,6 +111,8 @@ enum LocalizationKey {
   warning("Warning"),
   productAddedSuccessfully("Product added successfully"),
   productRemovedSuccessfully("Product removed successfully"),
+  planAddedSuccesfully(" Plan added successfully"),
+  planCanNotSuccesfully(" Plan can not added successfully"),
   productCouldNotBeAdded("Product could not be added"),
   makeYourRoutine("Make Your Routine"),
   morning("Morning"),
@@ -119,7 +121,7 @@ enum LocalizationKey {
   prepareYourPlan("Prepare Your Plan"),
   pleaseCheckYourRoutine("Please choose between morning or evening options."),
   pleaseAddCosmetics("Please add at least 1 cosmetic in your routine list"),
-  thereIsAPlanForThatDay("There is a plan for that day"),
+  thereIsAPlanForThatDay("There is a plan for today"),
   youSureUpdate("Do you want to update the plan?"),
   ;
 

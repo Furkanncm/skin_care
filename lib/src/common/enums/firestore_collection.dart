@@ -1,7 +1,9 @@
 enum FirestoreCollection {
   users('users'),
   cosmetics('cosmetics'),
-  plans('plans');
+  plans('plans'),
+  morning('morning'),
+  evening('evening');
 
   final String value;
 

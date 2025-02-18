@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:bloc_clean_architecture/src/common/configuration/configuration.dart';
 import 'package:bloc_clean_architecture/src/common/constants/app_contants.dart';
-import 'package:bloc_clean_architecture/src/data/model/my_user/my_user.dart';
 import 'package:bloc_clean_architecture/src/presentation/profile/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -89,8 +88,6 @@ final class _UserInfoField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<ProfileBloc>();
-    final user = bloc.state.user;
     return Container(
       height: context.height * 0.2,
       decoration: BoxDecoration(
@@ -103,9 +100,9 @@ final class _UserInfoField extends StatelessWidget {
           children: [
             Row(
               children: [
-                _AvatarField(user: user),
+                _AvatarField(),
                 horizontalBox20,
-                _NameAndEmailField(user: user),
+                _NameAndEmailField(),
               ],
             ),
           ],
@@ -117,22 +114,21 @@ final class _UserInfoField extends StatelessWidget {
 
 @immutable
 final class _NameAndEmailField extends StatelessWidget {
-  const _NameAndEmailField({
-    required this.user,
-  });
-
-  final MyUser? user;
+  const _NameAndEmailField();
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<ProfileBloc>();
+    final user = bloc.state.user;
+    if (user == null) return AdaptiveIndicator();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CoreText.headlineSmall(
-          (user?.name ?? '').characters.first.toUpperCase() + (user?.name ?? '').substring(1) + ' ' + (user?.surName ?? '').characters.first.toUpperCase() + (user?.surName ?? '').substring(1),
+          (user.name ?? '').characters.first.toUpperCase() + (user.name ?? '').substring(1) + ' ' + (user.surName ?? '').characters.first.toUpperCase() + (user.surName ?? '').substring(1),
           textColor: context.colorScheme.onPrimary,
         ),
-        CoreText.titleSmall(user?.email ?? '', textColor: context.colorScheme.onPrimary),
+        CoreText.titleSmall(user.email ?? '', textColor: context.colorScheme.onPrimary),
       ],
     );
   }
@@ -140,14 +136,12 @@ final class _NameAndEmailField extends StatelessWidget {
 
 @immutable
 final class _AvatarField extends StatelessWidget {
-  const _AvatarField({
-    required this.user,
-  });
-
-  final MyUser? user;
+  const _AvatarField();
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<ProfileBloc>();
+    final user = bloc.state.user;
     return SizedBox(
       width: 115,
       height: 115,
@@ -196,6 +190,7 @@ final class _UserDetailInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.watch<ProfileBloc>();
     final user = bloc.state.user;
+    if (user == null) return AdaptiveIndicator();
     return Padding(
       padding: AppConstants.paddingConstants.horizontalhighPadding,
       child: Column(
@@ -203,7 +198,7 @@ final class _UserDetailInfo extends StatelessWidget {
           children: ProfilInfoEnum.values.toList().map((e) {
             return ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: e.icon(user!),
+              leading: e.icon(user),
               title: CoreText.bodyLarge(e.name.characters.first.toUpperCase() + e.name.substring(1)),
               trailing: CoreText.bodyMedium(e.value(user)),
             );
