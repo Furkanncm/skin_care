@@ -156,7 +156,6 @@ final class _Cosmetics extends StatelessWidget {
           final cosmetic = cosmeticList?[index];
           final isAdded = bloc.state.addedCosmetics?.contains(cosmetic);
           if (cosmetic == null) return AdaptiveIndicator();
-          print(cosmeticList?.length);
           return ListTile(
             contentPadding: EdgeInsets.zero,
             leading: CircleAvatar(

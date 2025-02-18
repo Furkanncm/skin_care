@@ -41,7 +41,6 @@ class AddPlanBloc extends Bloc<AddPlanEvent, AddPlanState> {
         user: user,
       ),
     );
-    print(snapshot.docs.map((e) => Cosmetic.fromJson(e.data())).length);
   }
 
   Future<void> _addPlanIsMorningEvent(AddPlanIsMorningEvent event, Emitter<AddPlanState> emit) async {
