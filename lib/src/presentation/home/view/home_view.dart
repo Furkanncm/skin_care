@@ -17,8 +17,12 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: CoreText.headlineMedium(LocalizationKey.routines.value),
+        centerTitle: true,
+        backgroundColor: context.colorScheme.surface,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))),
+      ),
       body: BlocProvider(
         create: (context) => getIt<HomeBloc>()..add(HomeInitializedEvent()),
         child: BlocBuilder<HomeBloc, HomeState>(
@@ -56,30 +60,31 @@ class _HeaderSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       decoration: BoxDecoration(
+        color: context.colorScheme.surface,
+        borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
           colors: [context.colorScheme.primary, context.colorScheme.secondary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Hello ${username.isNotEmpty ? (username[0].toUpperCase() + username.substring(1)) : ''}",
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(color: context.colorScheme.onSurface),
           ),
           const SizedBox(height: 8),
           Text(
             LocalizationKey.sloganWithUserName.value,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white70),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.colorScheme.onSurface),
           ),
           const SizedBox(height: 16),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
+              color: context.colorScheme.surface,
             ),
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: TableCalendar(
@@ -124,13 +129,8 @@ class _DayTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       alignment: Alignment.center,
-      child: Text(
+      child: CoreText.bodyMedium(
         day.day.toString(),
-        style: TextStyle(
-          color: isToday ? Colors.white : Colors.black87,
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
-        ),
       ),
     );
   }
@@ -162,13 +162,13 @@ class _RoutinesSection extends StatelessWidget {
           _RoutineList(
             title: "Sabah Rutini",
             cosmetics: morningCosmetics,
-            height: morningCosmetics.length * 100,
+            height: morningCosmetics.length * 90,
           ),
         if (eveningCosmetics.isNotEmpty)
           _RoutineList(
             title: "Akşam Rutini",
             cosmetics: eveningCosmetics,
-            height: eveningCosmetics.length * 100,
+            height: eveningCosmetics.length * 90,
           ),
       ],
     );
@@ -193,7 +193,7 @@ class _RoutineList extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(

@@ -106,7 +106,7 @@ final class _PhotoCard extends StatelessWidget {
           height: 180,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Colors.grey.shade100,
+            color: context.colorScheme.surface,
           ),
           child: bloc.state.image != null
               ? Padding(

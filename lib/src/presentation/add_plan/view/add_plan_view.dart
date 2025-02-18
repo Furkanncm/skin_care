@@ -41,7 +41,7 @@ final class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: CoreText.headlineMedium(LocalizationKey.makeYourRoutine.value),
       centerTitle: true,
-      backgroundColor:context.colorScheme.surface,
+      backgroundColor: context.colorScheme.surface,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))),
     );
   }

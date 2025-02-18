@@ -95,7 +95,7 @@ class AddPlanBloc extends Bloc<AddPlanEvent, AddPlanState> {
               .set({
             'date': state.selectedDate!.toddMMy.toString(),
             ...cosmetic.toJson(),
-          }, SetOptions(merge: true)).withIndicator();
+          }, SetOptions(merge: true));
         }
       }
 
