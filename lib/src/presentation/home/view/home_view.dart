@@ -1,8 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:bloc_clean_architecture/src/common/configuration/configuration.dart';
 import 'package:bloc_clean_architecture/src/common/localization/localization_key.dart';
 import 'package:bloc_clean_architecture/src/common/widgets/adaptive_indicator/adaptive_indicator.dart';
+import 'package:bloc_clean_architecture/src/data/model/cosmetic/cosmetic.dart';
 import 'package:bloc_clean_architecture/src/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +49,6 @@ class _HeaderSection extends StatelessWidget {
   const _HeaderSection({
     required this.username,
     required this.state,
-    super.key,
   });
 
   @override
@@ -75,8 +76,6 @@ class _HeaderSection extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white70),
           ),
           const SizedBox(height: 16),
-
-          /// Gömülü sade takvim widget'ı.
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -140,7 +139,7 @@ class _DayTile extends StatelessWidget {
 /// Rutinlerin listelendiği bölüm.
 class _RoutinesSection extends StatelessWidget {
   final HomeState state;
-  const _RoutinesSection({required this.state, super.key});
+  const _RoutinesSection({required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -163,11 +162,13 @@ class _RoutinesSection extends StatelessWidget {
           _RoutineList(
             title: "Sabah Rutini",
             cosmetics: morningCosmetics,
+            height: morningCosmetics.length * 100,
           ),
         if (eveningCosmetics.isNotEmpty)
           _RoutineList(
             title: "Akşam Rutini",
             cosmetics: eveningCosmetics,
+            height: eveningCosmetics.length * 100,
           ),
       ],
     );
@@ -177,12 +178,14 @@ class _RoutinesSection extends StatelessWidget {
 // Sabaha ve akşama özel rutin tasarımı
 class _RoutineList extends StatelessWidget {
   final String title;
-  final List<dynamic> cosmetics;
+  final List<Cosmetic> cosmetics;
+  final double height;
   const _RoutineList({
+    Key? key,
     required this.title,
     required this.cosmetics,
-    super.key,
-  });
+    required this.height,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +214,7 @@ class _RoutineList extends StatelessWidget {
                 title == "Sabah Rutini" ? Icons.wb_sunny : Icons.nights_stay,
                 color: context.colorScheme.primary,
               ),
-              const SizedBox(width: 8),
+              horizontalBox8,
               Text(
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -221,13 +224,13 @@ class _RoutineList extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          horizontalBox16,
           // Yatay liste halinde kozmetik kartları
           SizedBox(
-            height: 220,
+            height: height,
             child: ListView.separated(
-              scrollDirection: Axis.horizontal,
               itemCount: cosmetics.length,
+              physics: NeverScrollableScrollPhysics(),
               separatorBuilder: (context, index) => const SizedBox(width: 16),
               itemBuilder: (context, index) {
                 final item = cosmetics[index];
@@ -242,42 +245,35 @@ class _RoutineList extends StatelessWidget {
 }
 
 class _CosmeticCard extends StatelessWidget {
-  final dynamic item; // Modelinizin tipi varsa onu kullanın.
-  const _CosmeticCard({required this.item, super.key});
+  final Cosmetic item;
+  const _CosmeticCard({
+    required this.item,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.file(
-            File(item?.image ?? "safafs"),
-            width: 60,
-            height: 60,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => Container(
-              width: 60,
-              height: 60,
-              color: Colors.red,
-              child: Icon(Icons.image, color: Colors.grey[600]),
-            ),
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.file(
+          File(item.image!),
+          width: 60,
+          height: 60,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) => Icon(
+            Icons.image_not_supported_outlined,
+            color: context.colorScheme.primary,
           ),
         ),
-        title: Text(
-          item?.name ?? "Unknown",
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(
-          item?.category ?? "Unknown",
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
+      ),
+      title: Text(
+        item.name ?? "Unknown",
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(
+        item.category ?? "Unknown",
+        style: Theme.of(context).textTheme.bodySmall,
       ),
     );
   }

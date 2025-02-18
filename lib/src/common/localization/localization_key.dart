@@ -121,7 +121,7 @@ enum LocalizationKey {
   prepareYourPlan("Prepare Your Plan"),
   pleaseCheckYourRoutine("Please choose between morning or evening options."),
   pleaseAddCosmetics("Please add at least 1 cosmetic in your routine list"),
-  thereIsAPlanForThatDay("There is a plan for today"),
+  thereIsAPlanForThatDay("There is no plan for today"),
   youSureUpdate("Do you want to update the plan?"),
   ;
 
