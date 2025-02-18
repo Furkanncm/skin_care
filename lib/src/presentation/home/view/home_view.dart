@@ -35,7 +35,17 @@ class HomeView extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               children: [
                 _HeaderSection(username: username, state: state),
-                const SizedBox(height: 16),
+                verticalBox16,
+                Align(
+                  alignment: Alignment.topRight,
+                  child: CoreIconButton(
+                    icon: Icon(
+                      Icons.refresh,
+                      size: 24,
+                    ),
+                    onPressed: () => context.read<HomeBloc>().add(HomeInitializedEvent()),
+                  ),
+                ),
                 _RoutinesSection(state: state),
               ],
             );
