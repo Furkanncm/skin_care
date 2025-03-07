@@ -17,7 +17,24 @@ SkinCare is a mobile application designed to help users plan and manage their da
   Securely store your data using Firestore for seamless access across devices.
 
 ## Screenshots
-(Include relevant screenshots here)
+
+Here are some screenshots of the SkinCare app:
+
+<img src="skin_care screenshots/img_add_cosmetic.jpg" width="250">  
+<img src="skin_care screenshots/img_add_cosmetic_completed.jpg" width="250">  
+<img src="skin_care screenshots/img_add_cosmetic_completed_dark.jpg" width="250">  
+<img src="skin_care screenshots/img_add_photo.jpg" width="250">  
+<img src="skin_care screenshots/img_add_plan.jpg" width="250">  
+<img src="skin_care screenshots/img_add_plan_dark.jpg" width="250">  
+<img src="skin_care screenshots/img_bottom_sheet.jpg" width="250">  
+<img src="skin_care screenshots/img_calendar.jpg" width="250">  
+<img src="skin_care screenshots/img_login.jpg" width="250">  
+<img src="skin_care screenshots/img_logout_dark.jpg" width="250">  
+<img src="skin_care screenshots/img_main_page.jpg" width="250">  
+<img src="skin_care screenshots/img_main_page_dark.jpg" width="250">  
+<img src="skin_care screenshots/img_profile.jpg" width="250">  
+<img src="skin_care screenshots/img_profile_dark.jpg" width="250">  
+<img src="skin_care screenshots/img_signUp.jpg" width="250">  
 
 ## Requirements
 
